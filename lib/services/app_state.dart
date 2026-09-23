@@ -204,6 +204,16 @@ class AppState extends ChangeNotifier {
     }
   }
 
+  void addCrop(CropRate crop) {
+    _crops.add(crop);
+    notifyListeners();
+  }
+
+  void deleteCrop(String cropId) {
+    _crops.removeWhere((c) => c.id == cropId);
+    notifyListeners();
+  }
+
   void addYard(YardModel yard) {
     _yards.add(yard);
     notifyListeners();

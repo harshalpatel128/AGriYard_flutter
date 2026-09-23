@@ -103,41 +103,44 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
 
               // Metrics Row 1: Total Arrival & Total Quantity
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Column(
-                    children: [
-                      const Text(
-                        'Total Arrival',
-                        style: TextStyle(fontSize: 13, color: AppColors.textLight),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${crop.arrivalBags} Bags',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textDark,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Total Arrival',
+                          style: TextStyle(fontSize: 13, color: AppColors.textLight),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          '${crop.arrivalBags} Bags',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textDark,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      const Text(
-                        'Total Quantity',
-                        style: TextStyle(fontSize: 13, color: AppColors.textLight),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${crop.totalQuantityKg.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Kg',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textDark,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Total Quantity',
+                          style: TextStyle(fontSize: 13, color: AppColors.textLight),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          '${crop.totalQuantityKg.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Kg',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textDark,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -147,58 +150,63 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
 
               // Metrics Row 2: Minimum, Average, Highest Price
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Column(
-                    children: [
-                      const Text(
-                        'Minimum Price',
-                        style: TextStyle(fontSize: 12, color: AppColors.textLight),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '₹${crop.minPrice}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryGreen,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Minimum Price',
+                          style: TextStyle(fontSize: 12, color: AppColors.textLight),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          '₹${crop.minPrice}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryGreen,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      const Text(
-                        'Average Price',
-                        style: TextStyle(fontSize: 12, color: AppColors.textLight),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '₹${crop.avgPrice}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryGreen,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Average Price',
+                          style: TextStyle(fontSize: 12, color: AppColors.textLight),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          '₹${crop.avgPrice}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryGreen,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      const Text(
-                        'Highest Price',
-                        style: TextStyle(fontSize: 12, color: AppColors.textLight),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '₹${crop.maxPrice}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryGreen,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Highest Price',
+                          style: TextStyle(fontSize: 12, color: AppColors.textLight),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          '₹${crop.maxPrice}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryGreen,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -237,12 +245,15 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
                     children: [
                       Icon(Icons.show_chart_rounded, color: AppColors.primaryGreen, size: 20),
                       SizedBox(width: 8),
-                      Text(
-                        'View 7-Day Price Chart & Analytics →',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryGreen,
+                      Flexible(
+                        child: Text(
+                          'View 7-Day Price Chart & Analytics →',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryGreen,
+                          ),
                         ),
                       ),
                     ],

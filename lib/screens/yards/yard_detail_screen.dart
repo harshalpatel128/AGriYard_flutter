@@ -142,20 +142,23 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
                             ),
                           );
                         },
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.calendar_today_outlined, size: 18, color: Colors.white),
-                            SizedBox(width: 8),
-                            Text(
-                              "Today's Rates",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                        child: const FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.calendar_today_outlined, size: 18, color: Colors.white),
+                              SizedBox(width: 8),
+                              Text(
+                                "Today's Rates",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -182,20 +185,23 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
                             ),
                           );
                         },
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.storefront_outlined, size: 20, color: AppColors.textDark),
-                            SizedBox(width: 8),
-                            Text(
-                              'Shop List',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textDark,
+                        child: const FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.storefront_outlined, size: 20, color: AppColors.textDark),
+                              SizedBox(width: 8),
+                              Text(
+                                'Shop List',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textDark,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

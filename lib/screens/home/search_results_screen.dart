@@ -190,10 +190,14 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Results for "$queryText"',
-                    style: const TextStyle(fontSize: 14, color: AppColors.textMedium),
+                  Expanded(
+                    child: Text(
+                      'Results for "$queryText"',
+                      style: const TextStyle(fontSize: 14, color: AppColors.textMedium),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
+                  const SizedBox(width: 8),
                   Text(
                     '${_getFilteredResults().length} Results Found',
                     style: const TextStyle(

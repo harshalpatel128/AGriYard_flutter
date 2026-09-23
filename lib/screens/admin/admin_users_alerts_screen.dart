@@ -132,18 +132,13 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
               const SizedBox(height: 32),
 
               // Section 2: Registered Users (14,520)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Registered Users (14,520)',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textDark,
-                    ),
-                  ),
-                ],
+              const Text(
+                'Registered Users (14,520)',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textDark,
+                ),
               ),
               const SizedBox(height: 14),
 

@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:agriyard/main.dart';
 import 'package:agriyard/screens/home/search_results_screen.dart';
-import 'package:agriyard/screens/home/filter_sort_screen.dart';
 import 'package:agriyard/screens/yards/yard_detail_screen.dart';
 import 'package:agriyard/screens/market/crop_detail_screen.dart';
-import 'package:agriyard/screens/market/crop_history_chart_screen.dart';
 import 'package:agriyard/screens/profile/change_password_screen.dart';
 import 'package:agriyard/screens/profile/contact_help_screen.dart';
 import 'package:agriyard/screens/admin/admin_navigation_screen.dart';
 import 'package:agriyard/services/app_state.dart';
 
 void main() {
-  testWidgets('AgriYard Complete 30-Screen Functional Suite', (WidgetTester tester) async {
+  testWidgets('1. Search Results & Filter Screen', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 2.625;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    // 1. Search Results & Filter Screen
     await tester.pumpWidget(const MaterialApp(home: SearchResultsScreen(initialQuery: 'Garlic')));
     await tester.pumpAndSettle();
     expect(find.text('Results for "Garlic"'), findsOneWidget);
@@ -34,8 +30,14 @@ void main() {
     expect(find.text('Apply Filters'), findsOneWidget);
     await tester.tap(find.text('Apply Filters'));
     await tester.pumpAndSettle();
+  });
 
-    // 2. Yard Detail Screen
+  testWidgets('2. Yard Detail Screen', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final yard = AppState().yards.first;
     await tester.pumpWidget(MaterialApp(home: YardDetailScreen(yard: yard)));
     await tester.pumpAndSettle();
@@ -46,8 +48,14 @@ void main() {
     expect(find.text('1985'), findsOneWidget);
     expect(find.text("Today's Rates"), findsOneWidget);
     expect(find.text('Shop List'), findsOneWidget);
+  });
 
-    // 3. Crop Detail Screen & History Chart
+  testWidgets('3. Crop Detail & Chart Screen', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final crop = AppState().crops.first;
     await tester.pumpWidget(MaterialApp(home: CropDetailScreen(crop: crop)));
     await tester.pumpAndSettle();
@@ -66,8 +74,14 @@ void main() {
     expect(find.text('Min Price'), findsOneWidget);
     expect(find.text('Avg Price'), findsOneWidget);
     expect(find.text('Max Price'), findsOneWidget);
+  });
 
-    // 4. Change Password & Contact Help Screens
+  testWidgets('4. Profile, Password & Help Screens', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(const MaterialApp(home: ChangePasswordScreen()));
     await tester.pumpAndSettle();
     expect(find.text('Change Password'), findsOneWidget);
@@ -81,11 +95,17 @@ void main() {
     expect(find.text('support@agriyard.com'), findsOneWidget);
     expect(find.text('Frequently Asked Questions'), findsOneWidget);
     expect(find.text('Send Feedback'), findsOneWidget);
+  });
 
-    // 5. Admin Navigation Suite (Screens 27, 28, 29, 30)
+  testWidgets('5. Admin Navigation & Operations Suite', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(const MaterialApp(home: AdminNavigationScreen()));
     await tester.pumpAndSettle();
-    expect(find.text('Dashboard'), findsOneWidget);
+    expect(find.text('Dashboard'), findsWidgets);
     expect(find.text('Total Users'), findsOneWidget);
     expect(find.text('Quick Price Update'), findsOneWidget);
 

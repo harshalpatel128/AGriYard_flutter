@@ -141,23 +141,25 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
                         child: const Icon(Icons.phone_outlined, color: AppColors.primaryGreen, size: 22),
                       ),
                       const SizedBox(width: 16),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Helpline Number',
-                            style: TextStyle(fontSize: 13, color: AppColors.textLight),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            '+919624042246',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textDark,
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Helpline Number',
+                              style: TextStyle(fontSize: 13, color: AppColors.textLight),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 2),
+                            Text(
+                              '+919624042246',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textDark,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -195,23 +197,25 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
                         child: const Icon(Icons.mail_outline_rounded, color: AppColors.primaryGreen, size: 22),
                       ),
                       const SizedBox(width: 16),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Email Support',
-                            style: TextStyle(fontSize: 13, color: AppColors.textLight),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            'support@agriyard.com',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textDark,
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Email Support',
+                              style: TextStyle(fontSize: 13, color: AppColors.textLight),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 2),
+                            Text(
+                              'support@agriyard.com',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textDark,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

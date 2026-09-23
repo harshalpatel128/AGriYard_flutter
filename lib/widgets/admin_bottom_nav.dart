@@ -40,29 +40,33 @@ class AdminBottomNav extends StatelessWidget {
           children: List.generate(items.length, (index) {
             final isSelected = currentIndex == index;
             final item = items[index];
-            return InkWell(
-              onTap: () => onTap(index),
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      item.icon,
-                      size: 24,
-                      color: isSelected ? AppColors.primaryGreen : AppColors.textMuted,
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      item.label,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+            return Expanded(
+              child: InkWell(
+                onTap: () => onTap(index),
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        item.icon,
+                        size: 24,
                         color: isSelected ? AppColors.primaryGreen : AppColors.textMuted,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 3),
+                      Text(
+                        item.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                          color: isSelected ? AppColors.primaryGreen : AppColors.textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

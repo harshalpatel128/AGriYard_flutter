@@ -192,13 +192,13 @@ class CropHistoryChartScreen extends StatelessWidget {
               const SizedBox(height: 18),
 
               // Legend
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 16,
+                runSpacing: 8,
                 children: [
                   _buildLegendItem('Min Price', AppColors.primaryGreen),
-                  const SizedBox(width: 20),
                   _buildLegendItem('Avg Price', const Color(0xFF6B7280)),
-                  const SizedBox(width: 20),
                   _buildLegendItem('Max Price', const Color(0xFF2563EB)),
                 ],
               ),

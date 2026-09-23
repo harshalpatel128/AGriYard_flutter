@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:agriyard/main.dart';
 import 'package:agriyard/screens/main_navigation_screen.dart';
 
 void main() {

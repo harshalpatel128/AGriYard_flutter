@@ -188,11 +188,13 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
                               : null,
                         ),
                         const SizedBox(width: 14),
-                        Text(
-                          yard['name']!,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: AppColors.textDark,
+                        Expanded(
+                          child: Text(
+                            yard['name']!,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: AppColors.textDark,
+                            ),
                           ),
                         ),
                       ],
