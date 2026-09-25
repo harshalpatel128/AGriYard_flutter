@@ -45,4 +45,3 @@ class AgriYardApp extends StatelessWidget {
     );
   }
 }
-

@@ -130,11 +130,12 @@ class AppState extends ChangeNotifier {
   void signup({required String name, required String phone, required String email, required String password}) {
     _isLoggedIn = true;
     _currentUser = UserModel(
-      id: 'user_',
+      id: 'user_${DateTime.now().millisecondsSinceEpoch}',
       name: name,
       phoneNumber: phone,
       email: email,
     );
+    _users.insert(0, _currentUser);
     _saveAuthToPreferences();
     notifyListeners();
   }
