@@ -64,10 +64,8 @@ class MarketRatesScreen extends StatelessWidget {
                 vertical: AppDimensions.paddingM,
               ),
               itemCount: crops.length + 1,
-              separatorBuilder: (_, __) => const Divider(
-                height: 20,
-                color: AppColors.borderLight,
-              ),
+              separatorBuilder: (_, __) =>
+                  const Divider(height: 20, color: AppColors.borderLight),
               itemBuilder: (context, index) {
                 if (index < crops.length) {
                   return _buildCropRateRow(context, crops[index]);
@@ -109,20 +107,18 @@ class MarketRatesScreen extends StatelessWidget {
           children: [
             // Crop Image
             Container(
-              width: AppDimensions.cardIconSize,
-              height: AppDimensions.cardIconSize,
-              decoration: const BoxDecoration(
-                color: Color(0xFFF6F8F6),
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: _cropBackground(crop.id),
                 shape: BoxShape.circle,
               ),
               padding: const EdgeInsets.all(4),
               child: Image.asset(
                 crop.imageAsset,
                 fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => const Icon(
-                  Icons.eco,
-                  color: AppColors.primaryGreen,
-                ),
+                errorBuilder: (_, __, ___) =>
+                    const Icon(Icons.eco, color: AppColors.primaryGreen),
               ),
             ),
             const SizedBox(width: 12),
@@ -135,7 +131,7 @@ class MarketRatesScreen extends StatelessWidget {
                   Text(
                     crop.displayName,
                     style: const TextStyle(
-                      fontSize: AppDimensions.textL,
+                      fontSize: AppDimensions.textM,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textDark,
                     ),
@@ -144,43 +140,52 @@ class MarketRatesScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _rateStat(AppStrings.marketArrival,
-                          '${crop.arrivalBags} ${AppConstants.arrivalUnit}'),
-                      _rateStat(AppStrings.marketMin,
-                          '${AppConstants.currencySymbol}${crop.minPrice}'),
-                      _rateStat(AppStrings.marketAvg,
-                          '${AppConstants.currencySymbol}${crop.avgPrice}'),
-                      _rateStat(AppStrings.marketMax,
-                          '${AppConstants.currencySymbol}${crop.maxPrice}'),
+                      _rateStat(
+                        AppStrings.marketArrival,
+                        '${crop.arrivalBags} ${AppConstants.arrivalUnit}',
+                      ),
+                      _rateStat(
+                        AppStrings.marketMin,
+                        '${AppConstants.currencySymbol}${crop.minPrice}',
+                      ),
+                      _rateStat(
+                        AppStrings.marketAvg,
+                        '${AppConstants.currencySymbol}${crop.avgPrice}',
+                      ),
+                      _rateStat(
+                        AppStrings.marketMax,
+                        '${AppConstants.currencySymbol}${crop.maxPrice}',
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
 
             // View Details button
             SizedBox(
+              width: 46,
               height: AppDimensions.buttonHeightSm,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryGreen,
                   foregroundColor: Colors.white,
                   elevation: 0,
+                  maximumSize: const Size(46, AppDimensions.buttonHeightSm),
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppDimensions.paddingM - 2),
+                  padding: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(AppDimensions.radiusM),
+                    borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                   ),
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => CropDetailScreen(crop: crop)),
+                      builder: (_) => CropDetailScreen(crop: crop),
+                    ),
                   );
                 },
                 child: const Text(
@@ -207,10 +212,7 @@ class MarketRatesScreen extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: AppDimensions.textXS,
-              color: AppColors.textLight,
-            ),
+            style: const TextStyle(fontSize: 9, color: AppColors.textLight),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -218,9 +220,9 @@ class MarketRatesScreen extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              fontSize: AppDimensions.textS,
+              fontSize: 10,
               fontWeight: FontWeight.bold,
-              color: AppColors.textDark,
+              color: AppColors.primaryGreen,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -228,5 +230,14 @@ class MarketRatesScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _cropBackground(String cropId) {
+    return switch (cropId) {
+      'wheat' || 'chana' => const Color(0xFFFFF3D5),
+      'soyabean' || 'tuver' => const Color(0xFFF0F9D8),
+      'cotton' || 'garlic' => const Color(0xFFF1F3F5),
+      _ => const Color(0xFFF6F8F6),
+    };
   }
 }
