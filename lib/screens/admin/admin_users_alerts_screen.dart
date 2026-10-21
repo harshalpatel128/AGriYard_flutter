@@ -88,7 +88,6 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Section 1: Send Push Notification
               const Text(
                 'Send Push Notification',
                 style: TextStyle(
@@ -136,7 +135,6 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
 
               const SizedBox(height: 32),
 
-              // Section 2: Registered Users (14,520)
               const Text(
                 'Registered Users (14,520)',
                 style: TextStyle(
@@ -147,7 +145,6 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Search User Bar
               Container(
                 height: 48,
                 decoration: BoxDecoration(
@@ -172,7 +169,6 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Users List
               ListenableBuilder(
                 listenable: AppState(),
                 builder: (context, _) {
@@ -237,7 +233,6 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
                                 ],
                               ),
                             ),
-                            // Status Badge (Clickable to toggle)
                             GestureDetector(
                               onTap: () => AppState().toggleUserBlock(u.id),
                               child: Container(

@@ -140,7 +140,6 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Curved Green Header with Avatar
             AppCurvedHeader(
               height: AppDimensions.profileHeaderHeight,
               child: Padding(
@@ -185,7 +184,6 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
 
-                    // Circular Avatar
                     Container(
                       width: AppDimensions.avatarLarge,
                       height: AppDimensions.avatarLarge,
@@ -244,7 +242,6 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Menu Options
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: AppDimensions.screenPaddingHLarge),
@@ -284,7 +281,6 @@ class ProfileScreen extends StatelessWidget {
 
                   const SizedBox(height: 56),
 
-                  // Logout Button
                   CustomOutlinedButton(
                     text: AppStrings.profileLogout,
                     icon: Icons.logout_rounded,

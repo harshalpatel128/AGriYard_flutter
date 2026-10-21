@@ -102,7 +102,6 @@ class MarketRatesScreen extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Crop Image
             Container(
               width: 38,
               height: 38,
@@ -120,7 +119,6 @@ class MarketRatesScreen extends StatelessWidget {
             ),
             const SizedBox(width: 12),
 
-            // Crop info & rates
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +158,6 @@ class MarketRatesScreen extends StatelessWidget {
             ),
             const SizedBox(width: 8),
 
-            // View Details button
             SizedBox(
               width: 46,
               height: AppDimensions.buttonHeightSm,

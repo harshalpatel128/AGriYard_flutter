@@ -108,7 +108,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Stat Cards (Total Users & Active Yards)
               ListenableBuilder(
                 listenable: AppState(),
                 builder: (context, _) {
@@ -133,7 +132,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Section: Quick Price Update
               const Text(
                 'Quick Price Update',
                 style: TextStyle(
@@ -144,7 +142,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Select Yard Dropdown
               const Text('Select Yard', style: TextStyle(fontSize: 13, color: AppColors.textLight)),
               const SizedBox(height: 6),
               Container(
@@ -171,7 +168,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Date input
               const Text('Date', style: TextStyle(fontSize: 13, color: AppColors.textLight)),
               const SizedBox(height: 6),
               Container(
@@ -187,7 +183,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Wheat (Ghau) Inputs
               const Text(
                 'Wheat (Ghau)',
                 style: TextStyle(
@@ -223,7 +218,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
               const SizedBox(height: 20),
 
-              // Soyabean Inputs
               const Text(
                 'Soyabean',
                 style: TextStyle(

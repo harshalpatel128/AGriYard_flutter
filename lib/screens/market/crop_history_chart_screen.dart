@@ -4,6 +4,7 @@ import '../../theme/app_colors.dart';
 import '../../models/crop_model.dart';
 import '../../widgets/price_table.dart';
 
+// 7-day crop price trend chart and history table
 class CropHistoryChartScreen extends StatelessWidget {
   final CropRate crop;
 
@@ -80,11 +81,9 @@ class CropHistoryChartScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 7-day data table
               PriceTable(records: history),
               const SizedBox(height: 32),
 
-              // Multi-line chart (Page 14)
               SizedBox(
                 height: 260,
                 child: LineChart(
@@ -142,7 +141,6 @@ class CropHistoryChartScreen extends StatelessWidget {
                     ),
                     borderData: FlBorderData(show: false),
                     lineBarsData: [
-                      // Min Price (Green)
                       LineChartBarData(
                         spots: minSpots,
                         isCurved: false,
@@ -158,7 +156,6 @@ class CropHistoryChartScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Avg Price (Grey)
                       LineChartBarData(
                         spots: avgSpots,
                         isCurved: false,
@@ -174,7 +171,6 @@ class CropHistoryChartScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Max Price (Blue)
                       LineChartBarData(
                         spots: maxSpots,
                         isCurved: false,
@@ -196,7 +192,6 @@ class CropHistoryChartScreen extends StatelessWidget {
               ),
               const SizedBox(height: 18),
 
-              // Legend
               Center(
                 child: Wrap(
                   alignment: WrapAlignment.center,

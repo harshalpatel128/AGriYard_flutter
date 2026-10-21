@@ -20,7 +20,26 @@ class OnboardingScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(
+                      color: AppColors.textMedium,
+                      fontWeight: FontWeight.w600,
+                      fontSize: AppDimensions.textBase,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
 
               const Text(
                 AppStrings.onboardingWelcome,

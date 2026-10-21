@@ -74,7 +74,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           child: Column(
             children: [
-              // Hero Crop Illustration Card
               Container(
                 width: double.infinity,
                 height: 180,
@@ -92,7 +91,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Today's Summary Capsule Badge
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 decoration: BoxDecoration(
@@ -110,7 +108,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Metrics Row 1: Total Arrival & Total Quantity
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -154,7 +151,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               const Divider(color: AppColors.borderLight),
               const SizedBox(height: 14),
 
-              // Metrics Row 2: Minimum, Average, Highest Price
               Row(
                 children: [
                   Expanded(
@@ -218,7 +214,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Last Updated Timestamp
               Text(
                 'Last Updated: ${crop.lastUpdated}',
                 style: const TextStyle(
@@ -228,7 +223,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 16),
 
-              // 7-Day History Chart Nav Button
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -270,7 +264,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Previous 7 Days Section (Clickable)
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -300,7 +293,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Price History Table
               InkWell(
                 onTap: () {
                   Navigator.push(

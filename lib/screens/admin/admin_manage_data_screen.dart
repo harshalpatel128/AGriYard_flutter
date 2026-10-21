@@ -161,11 +161,8 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
         child: TabBarView(
           controller: _tabController,
           children: [
-            // Yards Tab
             _buildYardsTab(),
-            // Crops Tab
             _buildCropsTab(),
-            // Shops Tab
             _buildShopsTab(),
           ],
         ),
@@ -183,14 +180,12 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
           child: Column(
             children: [
-              // + Add New Yard Button
               CustomPrimaryButton(
                 text: '+ Add New Yard',
                 onPressed: () => _showAddYardDialog(context),
               ),
               const SizedBox(height: 20),
 
-              // Yards List
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -214,7 +209,6 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                     ),
                     child: Row(
                       children: [
-                        // Building Icon
                         Container(
                           width: 38,
                           height: 38,
@@ -225,7 +219,6 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                           child: const Icon(Icons.domain_rounded, color: AppColors.textMedium, size: 22),
                         ),
                         const SizedBox(width: 14),
-                        // Title & Shops
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,12 +242,10 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                             ],
                           ),
                         ),
-                        // Edit Icon
                         IconButton(
                           icon: const Icon(Icons.edit_outlined, color: AppColors.primaryGreen, size: 22),
                           onPressed: () => _showAddYardDialog(context, yard),
                         ),
-                        // Delete Icon
                         IconButton(
                           icon: const Icon(Icons.delete_outline_rounded, color: AppColors.priceFallRed, size: 22),
                           onPressed: () => AppState().deleteYard(yard.id),

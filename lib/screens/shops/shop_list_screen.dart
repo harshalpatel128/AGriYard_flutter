@@ -60,7 +60,6 @@ class _ShopListScreenState extends State<ShopListScreen> {
           ),
           child: Column(
             children: [
-              // Search Bar
               Container(
                 height: AppDimensions.searchBarHeight,
                 decoration: BoxDecoration(
@@ -106,7 +105,6 @@ class _ShopListScreenState extends State<ShopListScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Shop List
               Expanded(
                 child: ListenableBuilder(
                   listenable: AppState(),
@@ -175,7 +173,6 @@ class _ShopListScreenState extends State<ShopListScreen> {
       ),
       child: Row(
         children: [
-          // Shop number
           SizedBox(
             width: 28,
             child: Text(
@@ -189,7 +186,6 @@ class _ShopListScreenState extends State<ShopListScreen> {
           ),
           const SizedBox(width: 8),
 
-          // Shop icon box
           Container(
             width: AppDimensions.shopIconBoxSize,
             height: AppDimensions.shopIconBoxSize,
@@ -207,7 +203,6 @@ class _ShopListScreenState extends State<ShopListScreen> {
           ),
           const SizedBox(width: 12),
 
-          // Name & phone
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +227,6 @@ class _ShopListScreenState extends State<ShopListScreen> {
             ),
           ),
 
-          // Call button
           InkWell(
             onTap: () => AppState().makePhoneCall(shop.phoneNumber),
             borderRadius: BorderRadius.circular(AppDimensions.radiusCircle),

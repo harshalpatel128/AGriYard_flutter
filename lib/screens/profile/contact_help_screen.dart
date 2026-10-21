@@ -111,7 +111,6 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Helpline Number Card
               InkWell(
                 onTap: () => AppState().makePhoneCall('+919624042246'),
                 borderRadius: BorderRadius.circular(14),
@@ -167,7 +166,6 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Email Support Card
               InkWell(
                 onTap: () => AppState().sendEmail('support@agriyard.com'),
                 borderRadius: BorderRadius.circular(14),
@@ -223,7 +221,6 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
               ),
               const SizedBox(height: 28),
 
-              // Frequently Asked Questions
               const Text(
                 'Frequently Asked Questions',
                 style: TextStyle(
@@ -234,7 +231,6 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
               ),
               const SizedBox(height: 12),
 
-              // FAQ List
               ...List.generate(faqs.length, (idx) {
                 final faq = faqs[idx];
                 final isExp = _expandedFaqs[idx] ?? false;
@@ -285,7 +281,6 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
 
               const SizedBox(height: 36),
 
-              // Send Feedback CTA
               CustomPrimaryButton(
                 text: 'Send Feedback',
                 icon: Icons.chat_bubble_outline_rounded,

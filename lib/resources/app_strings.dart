@@ -129,7 +129,6 @@ class AppStrings {
   static const String yardTodayRates = "Today's Rates";
   static const String yardShopList = 'Shop List';
 
-  // Shop List
   static const String shopListTitle = 'Shop List';
   static const String shopSearchHint = 'Search shop name...';
 

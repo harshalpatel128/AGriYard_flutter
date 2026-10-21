@@ -126,7 +126,6 @@ class AdminSettingsScreen extends StatelessWidget {
 
               const Spacer(),
 
-              // Red Outlined Logout from Admin Button
               CustomOutlinedButton(
                 text: 'Logout from Admin',
                 icon: Icons.logout_rounded,

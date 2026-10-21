@@ -41,7 +41,6 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Yard Image
               Container(
                 height: 220,
                 width: double.infinity,
@@ -67,7 +66,6 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Detail Rows
               _buildDetailItem(
                 icon: Icons.location_on_outlined,
                 title: 'Address',
@@ -95,10 +93,8 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
 
               const Spacer(),
 
-              // Bottom Two Buttons: Today's Rates & Shop List
               Row(
                 children: [
-                  // Today's Rates
                   Expanded(
                     child: SizedBox(
                       height: 52,
@@ -144,7 +140,6 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  // Shop List
                   Expanded(
                     child: SizedBox(
                       height: 52,

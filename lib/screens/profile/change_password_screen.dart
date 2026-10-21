@@ -83,7 +83,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 28),
-                // Current Password
                 CustomInputField(
                   label: 'Current Password',
                   hintText: '••••••••',
@@ -93,7 +92,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   validator: (v) => (v == null || v.isEmpty) ? 'Enter current password' : null,
                 ),
                 const SizedBox(height: 20),
-                // New Password
                 CustomInputField(
                   label: 'New Password',
                   hintText: 'Enter new password',
@@ -103,7 +101,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   validator: (v) => (v == null || v.length < 6) ? 'Password must be at least 6 characters' : null,
                 ),
                 const SizedBox(height: 20),
-                // Confirm New Password
                 CustomInputField(
                   label: 'Confirm New Password',
                   hintText: 'Confirm new password',
@@ -113,7 +110,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   validator: (v) => (v == null || v.isEmpty) ? 'Confirm new password' : null,
                 ),
                 const SizedBox(height: 36),
-                // Save Changes CTA
                 CustomPrimaryButton(
                   text: 'Save Changes',
                   onPressed: _saveChanges,
