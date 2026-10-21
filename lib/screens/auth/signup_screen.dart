@@ -5,7 +5,9 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../services/app_state.dart';
 import '../main_navigation_screen.dart';
+import 'login_screen.dart';
 
+// User registration screen
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -69,7 +71,16 @@ class _SignupScreenState extends State<SignupScreen> {
             size: AppDimensions.iconM,
             color: AppColors.textDark,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+              );
+            }
+          },
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -85,7 +96,6 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Logo
                 Image.asset(
                   AppAssets.appLogo,
                   height: AppDimensions.avatarMedium,
@@ -115,7 +125,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Full Name
                 CustomInputField(
                   label: AppStrings.labelFullName,
                   hintText: AppStrings.hintFullName,
@@ -127,7 +136,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 14),
 
-                // Mobile Number
                 CustomInputField(
                   label: AppStrings.labelMobile,
                   hintText: AppStrings.hintMobile,
@@ -140,7 +148,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 14),
 
-                // Email
                 CustomInputField(
                   label: AppStrings.labelEmail,
                   hintText: AppStrings.hintEmail,
@@ -153,7 +160,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 14),
 
-                // Password
                 CustomInputField(
                   label: AppStrings.labelPassword,
                   hintText: AppStrings.hintPassword,
@@ -166,7 +172,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 14),
 
-                // Confirm Password
                 CustomInputField(
                   label: AppStrings.labelConfirmPassword,
                   hintText: AppStrings.hintConfirmPassword,
@@ -179,14 +184,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Create Account Button
                 CustomPrimaryButton(
                   text: AppStrings.signupBtn,
                   onPressed: _handleSignup,
                 ),
                 const SizedBox(height: 20),
 
-                // Already have an account? Login
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

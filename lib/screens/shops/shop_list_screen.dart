@@ -32,20 +32,17 @@ class _ShopListScreenState extends State<ShopListScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: AppDimensions.iconM,
-            color: AppColors.textDark,
-          ),
-          onPressed: () {
-            if (widget.isTab && widget.onNavigateTab != null) {
-              widget.onNavigateTab!(0);
-            } else if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            }
-          },
-        ),
+        automaticallyImplyLeading: false,
+        leading: widget.isTab
+            ? null
+            : IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: AppDimensions.iconM,
+                  color: AppColors.textDark,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
         title: const Text(
           AppStrings.shopListTitle,
           style: TextStyle(

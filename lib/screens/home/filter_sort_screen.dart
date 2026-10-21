@@ -3,6 +3,7 @@ import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../../widgets/custom_button.dart';
 
+// Filter and sort options screen
 class FilterSortScreen extends StatefulWidget {
   const FilterSortScreen({super.key});
 
@@ -86,7 +87,6 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Sort By Section
               const Text(
                 'Sort By',
                 style: TextStyle(
@@ -148,7 +148,6 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
               const Divider(color: AppColors.borderLight),
               const SizedBox(height: 16),
 
-              // Filter by Market Yard Section
               const Text(
                 'Filter by Market Yard',
                 style: TextStyle(
@@ -206,7 +205,6 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
               }),
 
               const Spacer(),
-              // Apply Filters Button
               CustomPrimaryButton(
                 text: 'Apply Filters',
                 onPressed: _apply,

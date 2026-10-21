@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../models/crop_model.dart';
-import '../../services/app_state.dart';
 import '../../widgets/price_table.dart';
 import 'crop_history_chart_screen.dart';
 
@@ -15,13 +14,6 @@ class CropDetailScreen extends StatefulWidget {
 }
 
 class _CropDetailScreenState extends State<CropDetailScreen> {
-  late bool _isFavorite;
-
-  @override
-  void initState() {
-    super.initState();
-    _isFavorite = widget.crop.isFavorite;
-  }
 
   Color _getHeroBackgroundColor(String cropId) {
     switch (cropId.toLowerCase()) {
@@ -72,18 +64,6 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
                   builder: (_) => CropHistoryChartScreen(crop: crop),
                 ),
               );
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
-              color: _isFavorite ? AppColors.priceFallRed : AppColors.textDark,
-            ),
-            onPressed: () {
-              setState(() {
-                _isFavorite = !_isFavorite;
-              });
-              AppState().toggleFavoriteCrop(crop.id);
             },
           ),
           const SizedBox(width: 8),

@@ -1,5 +1,4 @@
-/// Barrel export file for all resource classes
-/// Import this single file to get access to all resources
+// Export application resources
 library;
 
 export 'app_strings.dart';

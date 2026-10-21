@@ -5,6 +5,7 @@ import '../../services/app_state.dart';
 import '../../models/crop_model.dart';
 import 'crop_detail_screen.dart';
 
+// Screen displaying daily market prices for all crops
 class MarketRatesScreen extends StatelessWidget {
   final bool isTab;
   final ValueChanged<int>? onNavigateTab;
@@ -16,21 +17,17 @@ class MarketRatesScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: AppDimensions.iconM,
-            color: AppColors.textDark,
-          ),
-          onPressed: () {
-            if (isTab && onNavigateTab != null) {
-              onNavigateTab!(0);
-            } else if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            }
-          },
-        ),
+        automaticallyImplyLeading: false,
+        leading: isTab
+            ? null
+            : IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: AppDimensions.iconM,
+                  color: AppColors.textDark,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
         title: const Column(
           children: [
             Text(

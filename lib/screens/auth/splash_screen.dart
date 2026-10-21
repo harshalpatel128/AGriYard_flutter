@@ -4,6 +4,7 @@ import '../../theme/app_colors.dart';
 import '../../resources/resources.dart';
 import 'onboarding_screen.dart';
 
+// Splash screen with initial loading animation
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -22,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Setup fade + scale animation for logo
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
@@ -61,14 +61,12 @@ class _SplashScreenState extends State<SplashScreen>
           children: [
             const Spacer(flex: 2),
 
-            // Animated Logo + Title
             FadeTransition(
               opacity: _fadeAnim,
               child: ScaleTransition(
                 scale: _scaleAnim,
                 child: Column(
                   children: [
-                    // App Logo
                     Image.asset(
                       AppAssets.appLogo,
                       height: AppDimensions.logoHeightLarge,
@@ -80,7 +78,6 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(height: 14),
 
-                    // App Name
                     const Text(
                       AppStrings.appName,
                       style: TextStyle(
@@ -92,7 +89,6 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(height: 10),
 
-                    // Decorative divider with center dot
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -120,7 +116,6 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(height: 12),
 
-                    // Tagline
                     const Text(
                       'Daily Market Rates\nat Your Fingertips',
                       textAlign: TextAlign.center,
@@ -128,7 +123,6 @@ class _SplashScreenState extends State<SplashScreen>
                         fontSize: AppDimensions.textXL,
                         height: 1.4,
                         color: AppColors.textMedium,
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -138,7 +132,6 @@ class _SplashScreenState extends State<SplashScreen>
 
             const Spacer(flex: 1),
 
-            // Hills Landscape Illustration
             Image.asset(
               AppAssets.splashHills,
               width: size.width,
@@ -151,7 +144,6 @@ class _SplashScreenState extends State<SplashScreen>
 
             const Spacer(flex: 1),
 
-            // Loading indicator
             const SizedBox(
               width: AppDimensions.progressIndicatorSize,
               height: AppDimensions.progressIndicatorSize,

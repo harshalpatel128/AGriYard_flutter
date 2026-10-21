@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../../widgets/custom_button.dart';
-import '../main_navigation_screen.dart';
+import '../auth/login_screen.dart';
 
 class AdminUsersAlertsScreen extends StatefulWidget {
   const AdminUsersAlertsScreen({super.key});
@@ -56,14 +56,11 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: AppColors.textDark),
           onPressed: () {
             AppState().setAdminMode(false);
-            if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            } else {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const MainNavigationScreen(initialIndex: 0)),
-              );
-            }
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginScreen()),
+              (route) => false,
+            );
           },
         ),
         title: const Text(

@@ -8,7 +8,9 @@ import '../main_navigation_screen.dart';
 import '../admin/admin_navigation_screen.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
+import 'onboarding_screen.dart';
 
+// User login screen
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -53,7 +55,16 @@ class _LoginScreenState extends State<LoginScreen> {
             size: AppDimensions.iconM,
             color: AppColors.textDark,
           ),
-          onPressed: () => Navigator.maybePop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+              );
+            }
+          },
         ),
         actions: [
           TextButton(
@@ -90,7 +101,6 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(height: 8),
 
-                // App Logo
                 Image.asset(
                   AppAssets.appLogo,
                   height: AppDimensions.logoHeight,
@@ -120,7 +130,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 32),
 
-                // Email field
                 CustomInputField(
                   label: AppStrings.labelEmail,
                   hintText: AppStrings.hintEmail,
@@ -137,7 +146,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Password field
                 CustomInputField(
                   label: AppStrings.labelPassword,
                   hintText: AppStrings.hintPassword,
@@ -153,7 +161,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 10),
 
-                // Forgot Password
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -177,59 +184,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Login Button
                 CustomPrimaryButton(
                   text: AppStrings.loginBtn,
                   onPressed: _handleLogin,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-                // Divider with "or continue with"
-                Row(
-                  children: [
-                    const Expanded(child: Divider(color: AppColors.border)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppDimensions.paddingM),
-                      child: Text(
-                        AppStrings.orContinueWith,
-                        style: const TextStyle(
-                          fontSize: AppDimensions.textM,
-                          color: AppColors.textLight,
-                        ),
-                      ),
-                    ),
-                    const Expanded(child: Divider(color: AppColors.border)),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                // Social buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _socialButton(
-                      child: const Text(
-                        'G',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFEA4335),
-                        ),
-                      ),
-                      onTap: _handleLogin,
-                    ),
-                    const SizedBox(width: 20),
-                    _socialButton(
-                      child: const Icon(Icons.apple,
-                          size: AppDimensions.iconXL, color: Colors.black),
-                      onTap: _handleLogin,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 36),
-
-                // Sign Up link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -264,31 +224,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _socialButton({required Widget child, required VoidCallback onTap}) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(AppDimensions.radiusCircle),
-      child: Container(
-        width: AppDimensions.socialBtnSize,
-        height: AppDimensions.socialBtnSize,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          border: Border.all(color: AppColors.border),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        alignment: Alignment.center,
-        child: child,
       ),
     );
   }

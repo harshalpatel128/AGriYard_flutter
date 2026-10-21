@@ -57,7 +57,6 @@ class CustomBottomNav extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Selected indicator dot
                       if (isSelected)
                         Container(
                           width: 4,

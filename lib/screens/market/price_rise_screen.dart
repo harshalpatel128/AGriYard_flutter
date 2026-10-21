@@ -23,16 +23,13 @@ class PriceRiseScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: AppColors.textDark),
-          onPressed: () {
-            if (isTab && onNavigateTab != null) {
-              onNavigateTab!(0);
-            } else if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            }
-          },
-        ),
+        automaticallyImplyLeading: false,
+        leading: isTab
+            ? null
+            : IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: AppColors.textDark),
+                onPressed: () => Navigator.pop(context),
+              ),
         title: const Column(
           children: [
             Text(

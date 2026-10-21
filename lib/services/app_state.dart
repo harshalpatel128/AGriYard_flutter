@@ -8,6 +8,7 @@ import '../models/user_model.dart';
 import '../data/mock_data.dart';
 import '../resources/resources.dart';
 
+// Global app state and mock data management
 class AppState extends ChangeNotifier {
   static final AppState _instance = AppState._internal();
   factory AppState() => _instance;

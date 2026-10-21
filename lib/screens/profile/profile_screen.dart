@@ -153,20 +153,17 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            size: AppDimensions.iconM,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            if (isTab && onNavigateTab != null) {
-                              onNavigateTab!(0);
-                            } else if (Navigator.canPop(context)) {
-                              Navigator.pop(context);
-                            }
-                          },
-                        ),
+                        if (!isTab)
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: AppDimensions.iconM,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                          )
+                        else
+                          const SizedBox(width: 48),
                         IconButton(
                           icon: const Icon(
                             Icons.settings_outlined,

@@ -4,6 +4,7 @@ import '../../services/app_state.dart';
 import '../market/crop_detail_screen.dart';
 import 'filter_sort_screen.dart';
 
+// Crop search and filtering results screen
 class SearchResultsScreen extends StatefulWidget {
   final String initialQuery;
   const SearchResultsScreen({super.key, this.initialQuery = 'Garlic'});
@@ -204,7 +205,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Results Header Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -228,7 +228,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Results List
               Expanded(
                 child: ListView.separated(
                   itemCount: _getFilteredResults().length + 1,
@@ -239,7 +238,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       final item = results[index];
                       return _buildResultCard(context, item);
                     } else {
-                      // Bottom Suggestion Box
                       return _buildBottomSuggestion();
                     }
                   },
@@ -283,7 +281,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         ),
         child: Row(
           children: [
-            // Crop Icon
             Container(
               width: 48,
               height: 48,
@@ -299,7 +296,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               ),
             ),
             const SizedBox(width: 14),
-            // Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -331,7 +327,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                 ],
               ),
             ),
-            // Price & Chevron
             Row(
               children: [
                 Text(

@@ -15,14 +15,6 @@ class YardDetailScreen extends StatefulWidget {
 }
 
 class _YardDetailScreenState extends State<YardDetailScreen> {
-  late bool _isFavorite;
-
-  @override
-  void initState() {
-    super.initState();
-    _isFavorite = widget.yard.isFavorite;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,21 +34,6 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
             color: AppColors.textDark,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
-              color: _isFavorite ? AppColors.priceFallRed : AppColors.textDark,
-            ),
-            onPressed: () {
-              setState(() {
-                _isFavorite = !_isFavorite;
-              });
-              AppState().toggleFavoriteYard(widget.yard.id);
-            },
-          ),
-          const SizedBox(width: 8),
-        ],
       ),
       body: SafeArea(
         child: Padding(

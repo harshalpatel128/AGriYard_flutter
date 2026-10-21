@@ -4,6 +4,7 @@ import '../../resources/resources.dart';
 import '../../widgets/custom_button.dart';
 import 'login_screen.dart';
 
+// Onboarding screen highlighting primary features
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
@@ -21,7 +22,6 @@ class OnboardingScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
-              // Welcome text
               const Text(
                 AppStrings.onboardingWelcome,
                 style: TextStyle(
@@ -51,7 +51,6 @@ class OnboardingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 28),
 
-              // Farmer & Tractor Graphic
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -99,7 +98,6 @@ class OnboardingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 36),
 
-              // Feature rows
               _buildFeatureRow(
                 icon: Icons.check_circle_outline_rounded,
                 title: AppStrings.feature1Title,
@@ -117,16 +115,8 @@ class OnboardingScreen extends StatelessWidget {
                 title: AppStrings.feature3Title,
                 subtitle: AppStrings.feature3Subtitle,
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 36),
 
-              // Page dot indicators
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(4, (i) => _buildDot(i == 0)),
-              ),
-              const SizedBox(height: 24),
-
-              // Get Started button
               CustomPrimaryButton(
                 text: AppStrings.onboardingGetStarted,
                 hasArrow: true,
@@ -140,25 +130,6 @@ class OnboardingScreen extends StatelessWidget {
               const SizedBox(height: 12),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDot(bool active) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: AnimatedContainer(
-        duration: AppConstants.animationNormal,
-        width: active
-            ? AppDimensions.indicatorDotSize *
-                AppDimensions.indicatorDotActiveFactor
-            : AppDimensions.indicatorDotSize,
-        height: AppDimensions.indicatorDotSize,
-        decoration: BoxDecoration(
-          color: active ? AppColors.primaryGreen : const Color(0xFFD1D5DB),
-          borderRadius:
-              BorderRadius.circular(AppDimensions.indicatorDotSize / 2),
         ),
       ),
     );

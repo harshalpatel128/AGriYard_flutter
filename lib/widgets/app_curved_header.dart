@@ -6,7 +6,6 @@ class CurvedHeaderClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 35);
-    // Smooth convex downward curve matching Figma
     path.quadraticBezierTo(
       size.width / 2,
       size.height + 15,

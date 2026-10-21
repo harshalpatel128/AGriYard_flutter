@@ -8,6 +8,7 @@ import '../market/price_rise_screen.dart';
 import '../market/price_fall_screen.dart';
 import 'search_results_screen.dart';
 
+// Main dashboard displaying featured market yards and price trends
 class HomeScreen extends StatelessWidget {
   final ValueChanged<int>? onNavigateTab;
 
@@ -173,7 +174,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Green Curved Header
             AppCurvedHeader(
               height: AppDimensions.homeHeaderHeight,
               child: Padding(
@@ -234,10 +234,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 12),
 
-                  // Search & Date Row
                   Row(
                     children: [
-                      // Search Bar
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
@@ -283,7 +281,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
 
-                      // Date Selector Button
                       ListenableBuilder(
                         listenable: AppState(),
                         builder: (context, _) {
@@ -325,7 +322,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Section Title
                   const Text(
                     AppStrings.homeMarketingYards,
                     style: TextStyle(
@@ -336,7 +332,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
 
-                  // 2x2 Grid of Marketing Yards
                   ListenableBuilder(
                     listenable: AppState(),
                     builder: (context, _) {
@@ -365,10 +360,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // Price Rise & Fall Cards
                   Row(
                     children: [
-                      // Price Rise
                       Expanded(
                         child: GestureDetector(
                           onTap: () => onNavigateTab != null
@@ -390,7 +383,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
 
-                      // Price Fall
                       Expanded(
                         child: GestureDetector(
                           onTap: () => onNavigateTab != null
@@ -516,7 +508,6 @@ class HomeScreen extends StatelessWidget {
                           color: AppColors.primaryGreen),
                     ),
                   ),
-                  // Gradient overlay
                   Positioned(
                     bottom: 0,
                     left: 0,

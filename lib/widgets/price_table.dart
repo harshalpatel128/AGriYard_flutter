@@ -21,7 +21,6 @@ class PriceTable extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
-          // Header
           Container(
             color: const Color(0xFFF8FAF8),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -78,7 +77,6 @@ class PriceTable extends StatelessWidget {
             ),
           ),
           const Divider(height: 1, color: AppColors.borderLight),
-          // Rows
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

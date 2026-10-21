@@ -1,5 +1,4 @@
-/// App-wide string constants for AgriYard
-/// Centralizes all text content to avoid hardcoded strings
+// Text strings used throughout the application
 class AppStrings {
   AppStrings._();
 

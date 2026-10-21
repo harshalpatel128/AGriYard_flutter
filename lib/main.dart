@@ -19,7 +19,7 @@ void main() async {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
-  // Warm up AppState singleton
+  // Initialize app state
   AppState();
   runApp(const AgriYardApp());
 }
