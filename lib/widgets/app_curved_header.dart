@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import '../resources/resources.dart';
 
 class CurvedHeaderClipper extends CustomClipper<Path> {
   @override

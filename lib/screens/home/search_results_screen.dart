@@ -143,7 +143,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           height: 44,
           margin: const EdgeInsets.only(right: 8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: AppColors.surfaceVariant,
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextField(
@@ -285,7 +285,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               width: 48,
               height: 48,
               decoration: const BoxDecoration(
-                color: Color(0xFFF6F8F6),
+                color: AppColors.surfaceVariant,
                 shape: BoxShape.circle,
               ),
               padding: const EdgeInsets.all(6),
@@ -352,9 +352,9 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       margin: const EdgeInsets.only(top: 8, bottom: 20),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFEFF7EE),
+        color: AppColors.mintBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFCDE8D4)),
+        border: Border.all(color: AppColors.mintLight),
       ),
       child: Row(
         children: [

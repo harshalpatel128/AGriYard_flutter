@@ -227,10 +227,10 @@ class MarketRatesScreen extends StatelessWidget {
 
   Color _cropBackground(String cropId) {
     return switch (cropId) {
-      'wheat' || 'chana' => const Color(0xFFFFF3D5),
-      'soyabean' || 'tuver' => const Color(0xFFF0F9D8),
-      'cotton' || 'garlic' => const Color(0xFFF1F3F5),
-      _ => const Color(0xFFF6F8F6),
+      'wheat' || 'chana' => AppColors.cropWheatBg,
+      'soyabean' || 'tuver' => AppColors.cropSoyabeanBg,
+      'cotton' || 'garlic' => AppColors.cropCottonBg,
+      _ => AppColors.surfaceVariant,
     };
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../resources/resources.dart';
 import '../../models/crop_model.dart';
 import '../../widgets/price_table.dart';
 import 'crop_history_chart_screen.dart';
@@ -19,16 +19,16 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
     switch (cropId.toLowerCase()) {
       case 'wheat':
       case 'chana':
-        return const Color(0xFFFBF4E6);
+        return AppColors.cropWheatBg;
       case 'soyabean':
       case 'tuver':
-        return const Color(0xFFEAF7EC);
+        return AppColors.cropSoyabeanBg;
       case 'cotton':
-        return const Color(0xFFF5F6F8);
+        return AppColors.cropCottonBg;
       case 'garlic':
-        return const Color(0xFFF8F9FA);
+        return AppColors.cropGarlicBg;
       default:
-        return const Color(0xFFFBF4E6);
+        return AppColors.cropWheatBg;
     }
   }
 
@@ -237,9 +237,9 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEFF7EE),
+                    color: AppColors.mintBackground,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: const Color(0xFFCDE8D4)),
+                    border: Border.all(color: AppColors.mintLight),
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

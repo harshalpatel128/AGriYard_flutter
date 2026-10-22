@@ -76,7 +76,7 @@ class OnboardingScreen extends StatelessWidget {
                     height: AppDimensions.onboardingGreenBump,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFD4EED8),
+                      color: AppColors.mintLight,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.elliptical(260, 90),
                       ),
@@ -166,10 +166,10 @@ class OnboardingScreen extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: const Color(0xFF90D2A6),
+              color: AppColors.primaryLight,
               width: AppDimensions.borderThick,
             ),
-            color: const Color(0xFFF1FAF3),
+            color: AppColors.mintBackground,
           ),
           child: Icon(icon, color: AppColors.primaryGreen, size: AppDimensions.iconXL),
         ),

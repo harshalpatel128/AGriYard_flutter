@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../../theme/app_colors.dart';
+import '../../resources/resources.dart';
 import '../../models/crop_model.dart';
 import '../../widgets/price_table.dart';
 
@@ -97,7 +97,7 @@ class CropHistoryChartScreen extends StatelessWidget {
                       drawVerticalLine: false,
                       horizontalInterval: interval,
                       getDrawingHorizontalLine: (val) => FlLine(
-                        color: Colors.grey.shade200,
+                        color: AppColors.chartGridLine,
                         strokeWidth: 1,
                       ),
                     ),
@@ -159,13 +159,13 @@ class CropHistoryChartScreen extends StatelessWidget {
                       LineChartBarData(
                         spots: avgSpots,
                         isCurved: false,
-                        color: const Color(0xFF6B7280),
+                        color: AppColors.chartAvgPrice,
                         barWidth: 2.2,
                         dotData: FlDotData(
                           show: true,
                           getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
                             radius: 3.5,
-                            color: const Color(0xFF6B7280),
+                            color: AppColors.chartAvgPrice,
                             strokeWidth: 1,
                             strokeColor: Colors.white,
                           ),
@@ -174,13 +174,13 @@ class CropHistoryChartScreen extends StatelessWidget {
                       LineChartBarData(
                         spots: maxSpots,
                         isCurved: false,
-                        color: const Color(0xFF2563EB),
+                        color: AppColors.chartMaxPrice,
                         barWidth: 2.2,
                         dotData: FlDotData(
                           show: true,
                           getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
                             radius: 3.5,
-                            color: const Color(0xFF2563EB),
+                            color: AppColors.chartMaxPrice,
                             strokeWidth: 1,
                             strokeColor: Colors.white,
                           ),
@@ -199,8 +199,8 @@ class CropHistoryChartScreen extends StatelessWidget {
                   runSpacing: 8,
                   children: [
                     _buildLegendItem('Min Price', AppColors.primaryGreen),
-                    _buildLegendItem('Avg Price', const Color(0xFF6B7280)),
-                    _buildLegendItem('Max Price', const Color(0xFF2563EB)),
+                    _buildLegendItem('Avg Price', AppColors.chartAvgPrice),
+                    _buildLegendItem('Max Price', AppColors.chartMaxPrice),
                   ],
                 ),
               ),

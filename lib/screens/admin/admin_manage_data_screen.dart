@@ -110,7 +110,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F9F7),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -213,7 +213,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                           width: 38,
                           height: 38,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF3F4F6),
+                            color: AppColors.surfaceVariant,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(Icons.domain_rounded, color: AppColors.textMedium, size: 22),

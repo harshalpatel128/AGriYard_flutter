@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import '../resources/resources.dart';
 import '../models/price_history_model.dart';
 
 class PriceTable extends StatelessWidget {
@@ -22,7 +22,7 @@ class PriceTable extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            color: const Color(0xFFF8FAF8),
+            color: AppColors.surfaceVariant,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: const Row(
               children: [

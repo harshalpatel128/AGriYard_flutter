@@ -4,7 +4,6 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../services/app_state.dart';
 import '../main_navigation_screen.dart';
-import '../admin/admin_navigation_screen.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
 import 'onboarding_screen.dart';
@@ -65,25 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              AppState().setAdminMode(true);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => const AdminNavigationScreen()),
-              );
-            },
-            child: const Text(
-              AppStrings.adminLabel,
-              style: TextStyle(
-                color: AppColors.primaryGreen,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
+        actions: const [],
         backgroundColor: Colors.white,
         elevation: 0,
       ),

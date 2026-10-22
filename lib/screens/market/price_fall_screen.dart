@@ -100,7 +100,7 @@ class PriceFallScreen extends StatelessWidget {
                             width: 44,
                             height: 44,
                             decoration: const BoxDecoration(
-                              color: Color(0xFFF6F8F6),
+                              color: AppColors.surfaceVariant,
                               shape: BoxShape.circle,
                             ),
                             padding: const EdgeInsets.all(4),

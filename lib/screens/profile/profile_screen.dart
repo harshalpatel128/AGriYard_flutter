@@ -223,7 +223,7 @@ class ProfileScreen extends StatelessWidget {
                       user.phoneNumber,
                       style: const TextStyle(
                         fontSize: AppDimensions.textM,
-                        color: Color(0xFFD4EED8),
+                        color: AppColors.mintLight,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -231,7 +231,7 @@ class ProfileScreen extends StatelessWidget {
                       user.email,
                       style: const TextStyle(
                         fontSize: AppDimensions.textM,
-                        color: Color(0xFFD4EED8),
+                        color: AppColors.mintLight,
                       ),
                     ),
                   ],

@@ -202,7 +202,7 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
                           children: [
                             CircleAvatar(
                               radius: 18,
-                              backgroundColor: u.isBlocked ? const Color(0xFFFFEBEE) : const Color(0xFFEFF7EE),
+                              backgroundColor: u.isBlocked ? AppColors.priceFallLight : AppColors.mintBackground,
                               child: Icon(
                                 u.isBlocked ? Icons.block_rounded : Icons.person_outline_rounded,
                                 color: u.isBlocked ? AppColors.priceFallRed : AppColors.primaryGreen,
@@ -238,7 +238,7 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: u.isBlocked ? const Color(0xFFFFEBEE) : const Color(0xFFEFF7EE),
+                                  color: u.isBlocked ? AppColors.priceFallLight : AppColors.mintBackground,
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: Text(
