@@ -3,6 +3,7 @@ import '../models/crop_model.dart';
 import '../models/price_history_model.dart';
 import '../models/shop_model.dart';
 import '../models/user_model.dart';
+import '../resources/resources.dart';
 
 class MockData {
   static List<YardModel> getYards() {
@@ -15,7 +16,7 @@ class MockData {
         contactNumber: '0281 2456789',
         totalShops: '250+ Shops',
         establishedYear: '1985',
-        imageAsset: 'assets/images/yard_rajkot.png',
+        imageAsset: AppAssets.yardRajkot,
       ),
       YardModel(
         id: 'junagadh',
@@ -25,7 +26,7 @@ class MockData {
         contactNumber: '0285 2654321',
         totalShops: '180+ Shops',
         establishedYear: '1978',
-        imageAsset: 'assets/images/yard_junagadh.png',
+        imageAsset: AppAssets.yardJunagadh,
       ),
       YardModel(
         id: 'gondal',
@@ -35,7 +36,7 @@ class MockData {
         contactNumber: '02825 221234',
         totalShops: '220+ Shops',
         establishedYear: '1965',
-        imageAsset: 'assets/images/yard_gondal.png',
+        imageAsset: AppAssets.yardGondal,
       ),
       YardModel(
         id: 'mendarda',
@@ -45,7 +46,7 @@ class MockData {
         contactNumber: '02872 245367',
         totalShops: '95+ Shops',
         establishedYear: '1992',
-        imageAsset: 'assets/images/yard_mendarda.png',
+        imageAsset: AppAssets.yardMendarda,
       ),
     ];
   }
@@ -56,7 +57,7 @@ class MockData {
         id: 'wheat',
         name: 'Wheat',
         gujaratiName: 'Ghau',
-        imageAsset: 'assets/images/crop_wheat.png',
+        imageAsset: AppAssets.cropWheat,
         arrivalBags: 980,
         totalQuantityKg: 19600,
         minPrice: 620,
@@ -80,7 +81,7 @@ class MockData {
         id: 'soyabean',
         name: 'Soyabean',
         gujaratiName: '',
-        imageAsset: 'assets/images/crop_soyabean.png',
+        imageAsset: AppAssets.cropSoyabean,
         arrivalBags: 860,
         totalQuantityKg: 17200,
         minPrice: 600,
@@ -104,7 +105,7 @@ class MockData {
         id: 'chana',
         name: 'Chana',
         gujaratiName: '',
-        imageAsset: 'assets/images/crop_chana.png',
+        imageAsset: AppAssets.cropChana,
         arrivalBags: 750,
         totalQuantityKg: 15000,
         minPrice: 540,
@@ -128,7 +129,7 @@ class MockData {
         id: 'cotton',
         name: 'Cotton',
         gujaratiName: 'Kapas',
-        imageAsset: 'assets/images/crop_cotton.png',
+        imageAsset: AppAssets.cropCotton,
         arrivalBags: 1020,
         totalQuantityKg: 20400,
         minPrice: 740,
@@ -152,7 +153,7 @@ class MockData {
         id: 'tuver',
         name: 'Tuver',
         gujaratiName: '',
-        imageAsset: 'assets/images/crop_tuver.png',
+        imageAsset: AppAssets.cropTuver,
         arrivalBags: 680,
         totalQuantityKg: 13600,
         minPrice: 700,
@@ -167,7 +168,7 @@ class MockData {
           PriceHistoryRecord(date: '19 May 2025', minPrice: 710, avgPrice: 770, maxPrice: 830),
           PriceHistoryRecord(date: '18 May 2025', minPrice: 720, avgPrice: 780, maxPrice: 840),
           PriceHistoryRecord(date: '17 May 2025', minPrice: 730, avgPrice: 790, maxPrice: 850),
-          PriceHistoryRecord(date: '16 May 2025', minPrice: 740, avgPrice: 800, maxPrice: 860),
+          PriceHistoryRecord(date: '16 May 2025', minPrice: 700, avgPrice: 800, maxPrice: 860),
           PriceHistoryRecord(date: '15 May 2025', minPrice: 750, avgPrice: 810, maxPrice: 870),
           PriceHistoryRecord(date: '14 May 2025', minPrice: 760, avgPrice: 820, maxPrice: 880),
         ],
@@ -176,7 +177,7 @@ class MockData {
         id: 'garlic',
         name: 'Garlic',
         gujaratiName: 'Lasan',
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         arrivalBags: 560,
         totalQuantityKg: 11200,
         minPrice: 900,

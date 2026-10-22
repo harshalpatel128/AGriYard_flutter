@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import '../auth/login_screen.dart';
 
@@ -91,7 +91,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             padding: const EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,
-              backgroundImage: const AssetImage('assets/images/admin_avatar.png'),
+              backgroundImage: const AssetImage(AppAssets.adminAvatar),
               backgroundColor: AppColors.mintLight,
             ),
           ),

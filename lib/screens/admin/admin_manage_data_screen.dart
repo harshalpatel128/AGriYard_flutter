@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import '../../models/yard_model.dart';
 import '../../widgets/custom_button.dart';
@@ -85,7 +85,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                     contactNumber: phoneController.text.trim(),
                     totalShops: shopsController.text.trim(),
                     establishedYear: '2000',
-                    imageAsset: 'assets/images/yard_rajkot.png',
+                    imageAsset: AppAssets.yardRajkot,
                   );
                   AppState().addYard(newYard);
                 } else {
@@ -138,7 +138,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,
-              backgroundImage: AssetImage('assets/images/admin_avatar.png'),
+              backgroundImage: AssetImage(AppAssets.adminAvatar),
               backgroundColor: AppColors.mintLight,
             ),
           ),

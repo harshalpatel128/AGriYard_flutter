@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import '../market/crop_detail_screen.dart';
 import 'filter_sort_screen.dart';
@@ -40,7 +40,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'rajkot',
         priceTag: 'Today Avg Price (20 Kg)',
         price: 1020,
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         cropId: 'garlic',
       ),
       _SearchResultItem(
@@ -49,7 +49,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'junagadh',
         priceTag: 'Today Avg Price (20 Kg)',
         price: 1010,
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         cropId: 'garlic',
       ),
       _SearchResultItem(
@@ -58,7 +58,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'gondal',
         priceTag: 'Today Avg Price (20 Kg)',
         price: 1005,
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         cropId: 'garlic',
       ),
       _SearchResultItem(
@@ -67,7 +67,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'mendarda',
         priceTag: 'Yesterday Avg Price (20 Kg)',
         price: 990,
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         cropId: 'garlic',
       ),
       _SearchResultItem(
@@ -76,7 +76,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'amreli',
         priceTag: 'Today Avg Price (20 Kg)',
         price: 995,
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         cropId: 'garlic',
       ),
       _SearchResultItem(
@@ -85,7 +85,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'bhavnagar',
         priceTag: 'Yesterday Avg Price (20 Kg)',
         price: 980,
-        imageAsset: 'assets/images/crop_garlic.png',
+        imageAsset: AppAssets.cropGarlic,
         cropId: 'garlic',
       ),
       _SearchResultItem(
@@ -94,7 +94,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'rajkot',
         priceTag: 'Today Avg Price (20 Kg)',
         price: 670,
-        imageAsset: 'assets/images/crop_wheat.png',
+        imageAsset: AppAssets.cropWheat,
         cropId: 'wheat',
       ),
       _SearchResultItem(
@@ -103,7 +103,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         yardId: 'junagadh',
         priceTag: 'Today Avg Price (20 Kg)',
         price: 650,
-        imageAsset: 'assets/images/crop_soyabean.png',
+        imageAsset: AppAssets.cropSoyabean,
         cropId: 'soyabean',
       ),
     ];

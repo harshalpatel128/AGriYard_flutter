@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import 'crop_detail_screen.dart';
 
@@ -11,11 +11,11 @@ class PriceFallScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final losers = [
-      {'id': 'chana', 'name': 'Chana', 'today': 540, 'decrease': 90, 'pct': 14.29, 'img': 'assets/images/crop_chana.png'},
-      {'id': 'tuver', 'name': 'Tuver', 'today': 670, 'decrease': 80, 'pct': 10.67, 'img': 'assets/images/crop_tuver.png'},
-      {'id': 'soyabean', 'name': 'Soyabean', 'today': 600, 'decrease': 60, 'pct': 9.09, 'img': 'assets/images/crop_soyabean.png'},
-      {'id': 'wheat', 'name': 'Wheat (Ghau)', 'today': 600, 'decrease': 40, 'pct': 6.25, 'img': 'assets/images/crop_wheat.png'},
-      {'id': 'garlic', 'name': 'Garlic (Lasan)', 'today': 1010, 'decrease': 40, 'pct': 3.81, 'img': 'assets/images/crop_garlic.png'},
+      {'id': 'chana', 'name': 'Chana', 'today': 540, 'decrease': 90, 'pct': 14.29, 'img': AppAssets.cropChana},
+      {'id': 'tuver', 'name': 'Tuver', 'today': 670, 'decrease': 80, 'pct': 10.67, 'img': AppAssets.cropTuver},
+      {'id': 'soyabean', 'name': 'Soyabean', 'today': 600, 'decrease': 60, 'pct': 9.09, 'img': AppAssets.cropSoyabean},
+      {'id': 'wheat', 'name': 'Wheat (Ghau)', 'today': 600, 'decrease': 40, 'pct': 6.25, 'img': AppAssets.cropWheat},
+      {'id': 'garlic', 'name': 'Garlic (Lasan)', 'today': 1010, 'decrease': 40, 'pct': 3.81, 'img': AppAssets.cropGarlic},
     ];
 
     return Scaffold(
