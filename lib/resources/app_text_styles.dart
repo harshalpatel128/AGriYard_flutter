@@ -52,6 +52,6 @@ class AppTextStyles {
   static const TextStyle priceHighlight = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
-    color: Color.fromARGB(255, 117, 19, 19),
+    color: Color.fromARGB(255, 19, 117, 32),
   );
 }
