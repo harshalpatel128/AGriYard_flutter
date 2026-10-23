@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../../widgets/custom_button.dart';
 import '../auth/login_screen.dart';
@@ -76,7 +76,7 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,
-              backgroundImage: AssetImage(AppAssets.adminAvatar),
+              backgroundImage: AssetImage('assets/images/admin_avatar.png'),
               backgroundColor: AppColors.mintLight,
             ),
           ),
@@ -202,7 +202,7 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
                           children: [
                             CircleAvatar(
                               radius: 18,
-                              backgroundColor: u.isBlocked ? AppColors.priceFallLight : AppColors.mintBackground,
+                              backgroundColor: u.isBlocked ? const Color(0xFFFFEBEE) : const Color(0xFFEFF7EE),
                               child: Icon(
                                 u.isBlocked ? Icons.block_rounded : Icons.person_outline_rounded,
                                 color: u.isBlocked ? AppColors.priceFallRed : AppColors.primaryGreen,
@@ -238,7 +238,7 @@ class _AdminUsersAlertsScreenState extends State<AdminUsersAlertsScreen> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: u.isBlocked ? AppColors.priceFallLight : AppColors.mintBackground,
+                                  color: u.isBlocked ? const Color(0xFFFFEBEE) : const Color(0xFFEFF7EE),
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: Text(

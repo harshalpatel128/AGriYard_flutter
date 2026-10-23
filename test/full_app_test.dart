@@ -68,13 +68,7 @@ void main() {
       expect(find.text('₹720'), findsOneWidget);
       expect(find.text('Previous 7 Days Prices (20 Kg)'), findsOneWidget);
 
-      // Navigate to CropHistoryChartScreen
-      await tester.tap(find.text('View 7-Day Price Chart & Analytics →'));
-      await tester.pumpAndSettle();
-      expect(find.text('Wheat (Ghau) - Last 7 Days'), findsOneWidget);
-      expect(find.text('Min Price'), findsOneWidget);
-      expect(find.text('Avg Price'), findsOneWidget);
-      expect(find.text('Max Price'), findsOneWidget);
+
     });
 
     testWidgets('4. Change Password & Contact Help Screens', (WidgetTester tester) async {

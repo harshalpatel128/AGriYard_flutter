@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../../widgets/custom_button.dart';
 
@@ -134,7 +134,7 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
                         width: 44,
                         height: 44,
                         decoration: const BoxDecoration(
-                          color: AppColors.mintBackground,
+                          color: Color(0xFFEFF7EE),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(Icons.phone_outlined, color: AppColors.primaryGreen, size: 22),
@@ -189,7 +189,7 @@ class _ContactHelpScreenState extends State<ContactHelpScreen> {
                         width: 44,
                         height: 44,
                         decoration: const BoxDecoration(
-                          color: AppColors.mintBackground,
+                          color: Color(0xFFEFF7EE),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(Icons.mail_outline_rounded, color: AppColors.primaryGreen, size: 22),

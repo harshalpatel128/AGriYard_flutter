@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../models/crop_model.dart';
 import '../../widgets/price_table.dart';
 
-// 7-day crop price trend chart and history table
 class CropHistoryChartScreen extends StatelessWidget {
   final CropRate crop;
 
@@ -81,9 +80,11 @@ class CropHistoryChartScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // 7-day data table
               PriceTable(records: history),
               const SizedBox(height: 32),
 
+              // Multi-line chart (Page 14)
               SizedBox(
                 height: 260,
                 child: LineChart(
@@ -97,7 +98,7 @@ class CropHistoryChartScreen extends StatelessWidget {
                       drawVerticalLine: false,
                       horizontalInterval: interval,
                       getDrawingHorizontalLine: (val) => FlLine(
-                        color: AppColors.chartGridLine,
+                        color: Colors.grey.shade200,
                         strokeWidth: 1,
                       ),
                     ),
@@ -141,6 +142,7 @@ class CropHistoryChartScreen extends StatelessWidget {
                     ),
                     borderData: FlBorderData(show: false),
                     lineBarsData: [
+                      // Min Price (Green)
                       LineChartBarData(
                         spots: minSpots,
                         isCurved: false,
@@ -156,31 +158,33 @@ class CropHistoryChartScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      // Avg Price (Grey)
                       LineChartBarData(
                         spots: avgSpots,
                         isCurved: false,
-                        color: AppColors.chartAvgPrice,
+                        color: const Color(0xFF6B7280),
                         barWidth: 2.2,
                         dotData: FlDotData(
                           show: true,
                           getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
                             radius: 3.5,
-                            color: AppColors.chartAvgPrice,
+                            color: const Color(0xFF6B7280),
                             strokeWidth: 1,
                             strokeColor: Colors.white,
                           ),
                         ),
                       ),
+                      // Max Price (Blue)
                       LineChartBarData(
                         spots: maxSpots,
                         isCurved: false,
-                        color: AppColors.chartMaxPrice,
+                        color: const Color(0xFF2563EB),
                         barWidth: 2.2,
                         dotData: FlDotData(
                           show: true,
                           getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
                             radius: 3.5,
-                            color: AppColors.chartMaxPrice,
+                            color: const Color(0xFF2563EB),
                             strokeWidth: 1,
                             strokeColor: Colors.white,
                           ),
@@ -192,6 +196,7 @@ class CropHistoryChartScreen extends StatelessWidget {
               ),
               const SizedBox(height: 18),
 
+              // Legend
               Center(
                 child: Wrap(
                   alignment: WrapAlignment.center,
@@ -199,8 +204,8 @@ class CropHistoryChartScreen extends StatelessWidget {
                   runSpacing: 8,
                   children: [
                     _buildLegendItem('Min Price', AppColors.primaryGreen),
-                    _buildLegendItem('Avg Price', AppColors.chartAvgPrice),
-                    _buildLegendItem('Max Price', AppColors.chartMaxPrice),
+                    _buildLegendItem('Avg Price', const Color(0xFF6B7280)),
+                    _buildLegendItem('Max Price', const Color(0xFF2563EB)),
                   ],
                 ),
               ),

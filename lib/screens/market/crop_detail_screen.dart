@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../models/crop_model.dart';
 import '../../widgets/price_table.dart';
-import 'crop_history_chart_screen.dart';
 
 class CropDetailScreen extends StatefulWidget {
   final CropRate crop;
@@ -19,16 +18,16 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
     switch (cropId.toLowerCase()) {
       case 'wheat':
       case 'chana':
-        return AppColors.cropWheatBg;
+        return const Color(0xFFFBF4E6);
       case 'soyabean':
       case 'tuver':
-        return AppColors.cropSoyabeanBg;
+        return const Color(0xFFEAF7EC);
       case 'cotton':
-        return AppColors.cropCottonBg;
+        return const Color(0xFFF5F6F8);
       case 'garlic':
-        return AppColors.cropGarlicBg;
+        return const Color(0xFFF8F9FA);
       default:
-        return AppColors.cropWheatBg;
+        return const Color(0xFFFBF4E6);
     }
   }
 
@@ -53,21 +52,7 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
             color: AppColors.textDark,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.show_chart_rounded, color: AppColors.primaryGreen),
-            tooltip: '7-Day Chart',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CropHistoryChartScreen(crop: crop),
-                ),
-              );
-            },
-          ),
-          const SizedBox(width: 8),
-        ],
+        
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -223,87 +208,19 @@ class _CropDetailScreenState extends State<CropDetailScreen> {
               ),
               const SizedBox(height: 16),
 
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CropHistoryChartScreen(crop: crop),
-                    ),
-                  );
-                },
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.mintBackground,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: AppColors.mintLight),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.show_chart_rounded, color: AppColors.primaryGreen, size: 20),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          'View 7-Day Price Chart & Analytics →',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryGreen,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
+              
 
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CropHistoryChartScreen(crop: crop),
-                    ),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Previous 7 Days Prices (${crop.priceUnit})',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textDark,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const Icon(Icons.chevron_right_rounded, color: AppColors.primaryGreen),
-                  ],
+              Text(
+                'Previous 7 Days Prices (${crop.priceUnit})',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textDark,
                 ),
               ),
               const SizedBox(height: 14),
 
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CropHistoryChartScreen(crop: crop),
-                    ),
-                  );
-                },
-                child: PriceTable(records: crop.history),
-              ),
+              PriceTable(records: crop.history),
               const SizedBox(height: 24),
             ],
           ),

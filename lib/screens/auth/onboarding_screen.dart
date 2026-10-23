@@ -19,26 +19,7 @@ class OnboardingScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const LoginScreen()),
-                    );
-                  },
-                  child: const Text(
-                    'Skip',
-                    style: TextStyle(
-                      color: AppColors.textMedium,
-                      fontWeight: FontWeight.w600,
-                      fontSize: AppDimensions.textBase,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 20),
 
               const Text(
                 AppStrings.onboardingWelcome,
@@ -76,7 +57,7 @@ class OnboardingScreen extends StatelessWidget {
                     height: AppDimensions.onboardingGreenBump,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: AppColors.mintLight,
+                      color: Color(0xFFD4EED8),
                       borderRadius: BorderRadius.vertical(
                         top: Radius.elliptical(260, 90),
                       ),
@@ -166,10 +147,10 @@ class OnboardingScreen extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: AppColors.primaryLight,
+              color: const Color(0xFF90D2A6),
               width: AppDimensions.borderThick,
             ),
-            color: AppColors.mintBackground,
+            color: const Color(0xFFF1FAF3),
           ),
           child: Icon(icon, color: AppColors.primaryGreen, size: AppDimensions.iconXL),
         ),

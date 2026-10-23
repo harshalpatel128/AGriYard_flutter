@@ -32,18 +32,7 @@ class AppColors {
   static const Color borderLight = Color(0xFFEDF2F7);
   static const Color divider = Color(0xFFEEEEEE);
 
-  // Accents & Chart
+  // Accents
   static const Color yellowAccent = Color(0xFFF59E0B);
   static const Color blueAccent = Color(0xFF1E88E5);
-  static const Color chartMinPrice = Color(0xFF137547);
-  static const Color chartAvgPrice = Color(0xFF6B7280);
-  static const Color chartMaxPrice = Color(0xFF2563EB);
-  static const Color chartGridLine = Color(0xFFE5E7EB);
-  static const Color drawerDivider = Color(0xFFD1D5DB);
-
-  // Crop hero and card background tints
-  static const Color cropWheatBg = Color(0xFFFBF4E6);
-  static const Color cropSoyabeanBg = Color(0xFFEAF7EC);
-  static const Color cropCottonBg = Color(0xFFF5F6F8);
-  static const Color cropGarlicBg = Color(0xFFF8F9FA);
 }

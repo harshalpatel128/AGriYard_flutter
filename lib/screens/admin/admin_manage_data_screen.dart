@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../../models/yard_model.dart';
 import '../../widgets/custom_button.dart';
@@ -85,7 +85,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                     contactNumber: phoneController.text.trim(),
                     totalShops: shopsController.text.trim(),
                     establishedYear: '2000',
-                    imageAsset: AppAssets.yardRajkot,
+                    imageAsset: 'assets/images/yard_rajkot.png',
                   );
                   AppState().addYard(newYard);
                 } else {
@@ -110,7 +110,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFF7F9F7),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -138,7 +138,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,
-              backgroundImage: AssetImage(AppAssets.adminAvatar),
+              backgroundImage: AssetImage('assets/images/admin_avatar.png'),
               backgroundColor: AppColors.mintLight,
             ),
           ),
@@ -213,7 +213,7 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                           width: 38,
                           height: 38,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceVariant,
+                            color: const Color(0xFFF3F4F6),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(Icons.domain_rounded, color: AppColors.textMedium, size: 22),

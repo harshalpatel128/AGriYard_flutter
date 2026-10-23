@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
         ),
-        actions: const [],
+        
         backgroundColor: Colors.white,
         elevation: 0,
       ),

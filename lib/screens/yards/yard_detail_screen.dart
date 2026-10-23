@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../models/yard_model.dart';
 import '../../services/app_state.dart';
 import '../market/market_rates_screen.dart';
@@ -207,7 +207,7 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
           width: 44,
           height: 44,
           decoration: const BoxDecoration(
-            color: AppColors.mintBackground,
+            color: Color(0xFFEFF7EE),
             shape: BoxShape.circle,
           ),
           child: Icon(icon, color: AppColors.primaryGreen, size: 22),

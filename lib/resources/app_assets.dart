@@ -2,7 +2,7 @@
 class AppAssets {
   AppAssets._();
 
-  static const String _imagesPath = 'lib/resources/assets/images/';
+  static const String _imagesPath = 'assets/images/';
 
   // Branding and onboarding
   static const String appLogo = '${_imagesPath}app_logo.png';

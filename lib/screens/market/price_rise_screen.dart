@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../resources/resources.dart';
+import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import 'crop_detail_screen.dart';
 
@@ -11,11 +11,11 @@ class PriceRiseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gainers = [
-      {'id': 'cotton', 'name': 'Cotton (Kapas)', 'today': 810, 'increase': 120, 'pct': 17.39, 'img': AppAssets.cropCotton},
-      {'id': 'soyabean', 'name': 'Soyabean', 'today': 650, 'increase': 80, 'pct': 14.04, 'img': AppAssets.cropSoyabean},
-      {'id': 'wheat', 'name': 'Wheat (Ghau)', 'today': 670, 'increase': 60, 'pct': 9.84, 'img': AppAssets.cropWheat},
-      {'id': 'tuver', 'name': 'Tuver', 'today': 760, 'increase': 50, 'pct': 7.25, 'img': AppAssets.cropTuver},
-      {'id': 'garlic', 'name': 'Garlic (Lasan)', 'today': 1020, 'increase': 60, 'pct': 6.32, 'img': AppAssets.cropGarlic},
+      {'id': 'cotton', 'name': 'Cotton (Kapas)', 'today': 810, 'increase': 120, 'pct': 17.39, 'img': 'assets/images/crop_cotton.png'},
+      {'id': 'soyabean', 'name': 'Soyabean', 'today': 650, 'increase': 80, 'pct': 14.04, 'img': 'assets/images/crop_soyabean.png'},
+      {'id': 'wheat', 'name': 'Wheat (Ghau)', 'today': 670, 'increase': 60, 'pct': 9.84, 'img': 'assets/images/crop_wheat.png'},
+      {'id': 'tuver', 'name': 'Tuver', 'today': 760, 'increase': 50, 'pct': 7.25, 'img': 'assets/images/crop_tuver.png'},
+      {'id': 'garlic', 'name': 'Garlic (Lasan)', 'today': 1020, 'increase': 60, 'pct': 6.32, 'img': 'assets/images/crop_garlic.png'},
     ];
 
     return Scaffold(
@@ -100,7 +100,7 @@ class PriceRiseScreen extends StatelessWidget {
                             width: 44,
                             height: 44,
                             decoration: const BoxDecoration(
-                              color: AppColors.surfaceVariant,
+                              color: Color(0xFFF6F8F6),
                               shape: BoxShape.circle,
                             ),
                             padding: const EdgeInsets.all(4),
