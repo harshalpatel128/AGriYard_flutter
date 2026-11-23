@@ -57,16 +57,6 @@ class HomeScreen extends StatelessWidget {
                 title: AppStrings.drawerShopDirectory,
                 onTap: () { Navigator.pop(ctx); onNavigateTab?.call(4); },
               ),
-              _drawerTile(
-                ctx: ctx,
-                icon: Icons.admin_panel_settings,
-                title: AppStrings.drawerAdminPanel,
-                onTap: () {
-                  Navigator.pop(ctx);
-                  AppState().setAdminMode(true);
-                  Navigator.pushNamed(context, AppConstants.routeAdmin);
-                },
-              ),
             ],
           ),
         ),
@@ -334,10 +324,7 @@ class HomeScreen extends StatelessWidget {
                   ListenableBuilder(
                     listenable: AppState(),
                     builder: (context, _) {
-                      final displayYards = AppState()
-                          .yards
-                          .take(AppConstants.homeYardsGridCount)
-                          .toList();
+                      final displayYards = AppState().yards;
                       return GridView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
@@ -470,6 +457,7 @@ class HomeScreen extends StatelessWidget {
   Widget _buildYardGridCard(BuildContext context, dynamic yard) {
     return GestureDetector(
       onTap: () {
+        AppState().selectYard(yard.id);
         Navigator.push(
           context,
           MaterialPageRoute(

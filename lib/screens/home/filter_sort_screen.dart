@@ -82,136 +82,142 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Sort By',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
-                ),
-              ),
-              const SizedBox(height: 12),
-              ...sortOptions.map((opt) {
-                final isSelected = _selectedSort == opt;
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      _selectedSort = opt;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 22,
-                          height: 22,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isSelected ? AppColors.primaryGreen : AppColors.textMuted,
-                              width: 2,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(3),
-                          child: isSelected
-                              ? Container(
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.primaryGreen,
-                                    shape: BoxShape.circle,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Sort By',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textDark,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    ...sortOptions.map((opt) {
+                      final isSelected = _selectedSort == opt;
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selectedSort = opt;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 22,
+                                height: 22,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: isSelected ? AppColors.primaryGreen : AppColors.textMuted,
+                                    width: 2,
                                   ),
-                                )
-                              : null,
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Text(
-                            opt,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: AppColors.textDark,
-                            ),
+                                ),
+                                padding: const EdgeInsets.all(3),
+                                child: isSelected
+                                    ? Container(
+                                        decoration: const BoxDecoration(
+                                          color: AppColors.primaryGreen,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Text(
+                                  opt,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.textDark,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
+                      );
+                    }),
+
+                    const SizedBox(height: 24),
+                    const Divider(color: AppColors.borderLight),
+                    const SizedBox(height: 16),
+
+                    const Text(
+                      'Filter by Market Yard',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textDark,
+                      ),
                     ),
-                  ),
-                );
-              }),
-
-              const SizedBox(height: 24),
-              const Divider(color: AppColors.borderLight),
-              const SizedBox(height: 16),
-
-              const Text(
-                'Filter by Market Yard',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
+                    const SizedBox(height: 12),
+                    ...yardOptions.map((yard) {
+                      final isChecked = _selectedYards.contains(yard['id']);
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (isChecked) {
+                              _selectedYards.remove(yard['id']);
+                            } else {
+                              _selectedYards.add(yard['id']!);
+                            }
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 22,
+                                height: 22,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: isChecked ? AppColors.primaryGreen : Colors.white,
+                                  border: Border.all(
+                                    color: isChecked ? AppColors.primaryGreen : AppColors.textMuted,
+                                    width: 1.8,
+                                  ),
+                                ),
+                                child: isChecked
+                                    ? const Icon(Icons.check, size: 16, color: Colors.white)
+                                    : null,
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Text(
+                                  yard['name']!,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.textDark,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
                 ),
               ),
-              const SizedBox(height: 12),
-              ...yardOptions.map((yard) {
-                final isChecked = _selectedYards.contains(yard['id']);
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      if (isChecked) {
-                        _selectedYards.remove(yard['id']);
-                      } else {
-                        _selectedYards.add(yard['id']!);
-                      }
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 22,
-                          height: 22,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: isChecked ? AppColors.primaryGreen : Colors.white,
-                            border: Border.all(
-                              color: isChecked ? AppColors.primaryGreen : AppColors.textMuted,
-                              width: 1.8,
-                            ),
-                          ),
-                          child: isChecked
-                              ? const Icon(Icons.check, size: 16, color: Colors.white)
-                              : null,
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Text(
-                            yard['name']!,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: AppColors.textDark,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }),
-
-              const Spacer(),
-              CustomPrimaryButton(
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              child: CustomPrimaryButton(
                 text: 'Apply Filters',
                 onPressed: _apply,
               ),
-              const SizedBox(height: 12),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

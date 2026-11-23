@@ -41,57 +41,67 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 220,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: Image.asset(
-                  widget.yard.imageAsset,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
-                    color: AppColors.mintLight,
-                    child: const Icon(Icons.business, size: 60, color: AppColors.primaryGreen),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.04),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.asset(
+                          widget.yard.imageAsset,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Container(
+                            color: AppColors.mintLight,
+                            child: const Icon(Icons.business, size: 60, color: AppColors.primaryGreen),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      _buildDetailItem(
+                        icon: Icons.location_on_outlined,
+                        title: 'Address',
+                        value: widget.yard.address,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildDetailItem(
+                        icon: Icons.phone_outlined,
+                        title: 'Contact Number',
+                        value: widget.yard.contactNumber,
+                        isClickablePhone: true,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildDetailItem(
+                        icon: Icons.storefront_outlined,
+                        title: 'Total Shops',
+                        value: widget.yard.totalShops,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildDetailItem(
+                        icon: Icons.calendar_today_outlined,
+                        title: 'Established',
+                        value: widget.yard.establishedYear,
+                      ),
+                      const SizedBox(height: 16),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
 
-              _buildDetailItem(
-                icon: Icons.location_on_outlined,
-                title: 'Address',
-                value: widget.yard.address,
-              ),
-              const SizedBox(height: 18),
-              _buildDetailItem(
-                icon: Icons.phone_outlined,
-                title: 'Contact Number',
-                value: widget.yard.contactNumber,
-                isClickablePhone: true,
-              ),
-              const SizedBox(height: 18),
-              _buildDetailItem(
-                icon: Icons.storefront_outlined,
-                title: 'Total Shops',
-                value: widget.yard.totalShops,
-              ),
-              const SizedBox(height: 18),
-              _buildDetailItem(
-                icon: Icons.calendar_today_outlined,
-                title: 'Established',
-                value: widget.yard.establishedYear,
-              ),
-
-              const Spacer(),
+              const SizedBox(height: 12),
 
               Row(
                 children: [
@@ -109,6 +119,7 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
                           elevation: 0,
                         ),
                         onPressed: () {
+                          AppState().selectYard(widget.yard.id);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

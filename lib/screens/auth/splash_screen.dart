@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: SafeArea(
         child: Column(
           children: [
-            const Spacer(flex: 2),
+            const Spacer(flex: 1),
 
             FadeTransition(
               opacity: _fadeAnim,
@@ -131,13 +131,18 @@ class _SplashScreenState extends State<SplashScreen>
 
             const Spacer(flex: 1),
 
-            Image.asset(
-              AppAssets.splashHills,
-              width: size.width,
-              fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) => Container(
-                height: 180,
-                color: AppColors.mintLight,
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Image.asset(
+                  AppAssets.splashHills,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) => Container(
+                    height: 140,
+                    color: AppColors.mintLight,
+                  ),
+                ),
               ),
             ),
 

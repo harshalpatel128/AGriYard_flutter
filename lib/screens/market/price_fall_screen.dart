@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
+import '../../models/crop_model.dart';
+import '../../widgets/yard_selector_bar.dart';
 import 'crop_detail_screen.dart';
 
 class PriceFallScreen extends StatelessWidget {
@@ -10,14 +12,6 @@ class PriceFallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final losers = [
-      {'id': 'chana', 'name': 'Chana', 'today': 540, 'decrease': 90, 'pct': 14.29, 'img': 'assets/images/crop_chana.png'},
-      {'id': 'tuver', 'name': 'Tuver', 'today': 670, 'decrease': 80, 'pct': 10.67, 'img': 'assets/images/crop_tuver.png'},
-      {'id': 'soyabean', 'name': 'Soyabean', 'today': 600, 'decrease': 60, 'pct': 9.09, 'img': 'assets/images/crop_soyabean.png'},
-      {'id': 'wheat', 'name': 'Wheat (Ghau)', 'today': 600, 'decrease': 40, 'pct': 6.25, 'img': 'assets/images/crop_wheat.png'},
-      {'id': 'garlic', 'name': 'Garlic (Lasan)', 'today': 1010, 'decrease': 40, 'pct': 3.81, 'img': 'assets/images/crop_garlic.png'},
-    ];
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -61,110 +55,149 @@ class PriceFallScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                itemCount: losers.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final item = losers[index];
-                  return InkWell(
-                    onTap: () {
-                      final crop = AppState().crops.firstWhere(
-                            (c) => c.id == item['id'],
-                            orElse: () => AppState().crops.first,
-                          );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => CropDetailScreen(crop: crop)),
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.borderLight),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.02),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
+            const SizedBox(height: 8),
+            const YardSelectorBar(),
+            const SizedBox(height: 6),
+            ListenableBuilder(
+              listenable: AppState(),
+              builder: (context, _) {
+                final yard = AppState().currentYard;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.location_on, size: 16, color: AppColors.primaryGreen),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Market: ${yard?.name ?? "Rajkot APMC"}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textMedium,
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 44,
-                            height: 44,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFF6F8F6),
-                              shape: BoxShape.circle,
-                            ),
-                            padding: const EdgeInsets.all(4),
-                            child: Image.asset(
-                              item['img'] as String,
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, __, ___) => const Icon(Icons.eco, color: AppColors.primaryGreen),
-                            ),
-                          ),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item['name'] as String,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textDark,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                const Text(
-                                  'Today',
-                                  style: TextStyle(fontSize: 12, color: AppColors.textLight),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  '₹${item['today']}',
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textDark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '-₹${item['decrease']}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.priceFallRed,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '-${item['pct']}%',
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.priceFallRed,
-                                ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const Divider(height: 12, color: AppColors.borderLight),
+            Expanded(
+              child: ListenableBuilder(
+                listenable: AppState(),
+                builder: (context, _) {
+                  final losers = AppState().getFallCropsForYard(AppState().selectedYardId);
+
+                  if (losers.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        'No price fall recorded for this yard today',
+                        style: TextStyle(color: AppColors.textMuted, fontSize: 14),
+                      ),
+                    );
+                  }
+
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    itemCount: losers.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final crop = losers[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => CropDetailScreen(crop: crop)),
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.borderLight),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.02),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFFDF5F5),
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: const EdgeInsets.all(4),
+                                child: Image.asset(
+                                  crop.imageAsset,
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (_, __, ___) => const Icon(Icons.eco, color: AppColors.priceFallRed),
+                                ),
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      crop.displayName,
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.textDark,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      'Arrival: ${crop.arrivalBags} Bags',
+                                      style: const TextStyle(fontSize: 12, color: AppColors.textLight),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      '₹${crop.avgPrice}',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.textDark,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '-₹${crop.changeAmount.abs()}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.priceFallRed,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '-${crop.changePercentage}%',
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.priceFallRed,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

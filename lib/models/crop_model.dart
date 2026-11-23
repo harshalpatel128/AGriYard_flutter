@@ -2,6 +2,7 @@ import 'price_history_model.dart';
 
 class CropRate {
   final String id;
+  final String yardId;
   final String name;
   final String gujaratiName;
   final String imageAsset;
@@ -20,6 +21,7 @@ class CropRate {
 
   CropRate({
     required this.id,
+    this.yardId = 'rajkot',
     required this.name,
     required this.gujaratiName,
     required this.imageAsset,
@@ -41,6 +43,7 @@ class CropRate {
 
   CropRate copyWith({
     String? id,
+    String? yardId,
     String? name,
     String? gujaratiName,
     String? imageAsset,
@@ -59,6 +62,7 @@ class CropRate {
   }) {
     return CropRate(
       id: id ?? this.id,
+      yardId: yardId ?? this.yardId,
       name: name ?? this.name,
       gujaratiName: gujaratiName ?? this.gujaratiName,
       imageAsset: imageAsset ?? this.imageAsset,

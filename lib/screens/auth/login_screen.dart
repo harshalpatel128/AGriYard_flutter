@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../resources/resources.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../services/app_state.dart';
 import '../main_navigation_screen.dart';
+import '../admin/admin_navigation_screen.dart';
 import 'forgot_password_screen.dart';
 import 'signup_screen.dart';
 import 'onboarding_screen.dart';
 
-// User login screen
+// User login screen with specific Admin role detection
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -17,10 +19,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController =
-      TextEditingController(text: AppConstants.defaultUserEmail);
-  final _passwordController = TextEditingController(text: 'password123');
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -29,16 +31,90 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     if (_formKey.currentState?.validate() ?? false) {
-      AppState().login(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
-      );
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+      final isAdmin = AppState().isAdminEmail(email);
+
+      setState(() => _isLoading = true);
+      try {
+        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        AppState().login(
+          email: credential.user?.email ?? email,
+          password: password,
+        );
+        if (mounted) {
+          if (isAdmin) {
+            AppState().setAdminMode(true);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+            );
+          } else {
+            AppState().setAdminMode(false);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+            );
+          }
+        }
+      } on FirebaseAuthException catch (e) {
+        if (isAdmin && (e.code == 'user-not-found' || e.code == 'invalid-credential')) {
+          try {
+            final newCred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: email,
+              password: password,
+            );
+            AppState().login(email: newCred.user?.email ?? email, password: password);
+            if (mounted) {
+              AppState().setAdminMode(true);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+              );
+              return;
+            }
+          } catch (_) {
+            AppState().login(email: email, password: password);
+            if (mounted) {
+              AppState().setAdminMode(true);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+              );
+              return;
+            }
+          }
+        }
+
+        String msg = 'Login failed. Please try again.';
+        if (e.code == 'user-not-found') msg = 'No account found with this email.';
+        if (e.code == 'wrong-password') msg = 'Wrong password. Please try again.';
+        if (e.code == 'invalid-credential') msg = 'Invalid email or password.';
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: AppColors.error),
+          );
+        }
+      } catch (_) {
+        if (isAdmin) {
+          AppState().login(email: email, password: password);
+          if (mounted) {
+            AppState().setAdminMode(true);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+            );
+            return;
+          }
+        }
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -64,7 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
         ),
-        
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -117,9 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefixIcon: Icons.mail_outline_rounded,
                   keyboardType: TextInputType.emailAddress,
                   validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return AppStrings.validEmail;
-                    }
+                    if (val == null || val.trim().isEmpty) return AppStrings.validEmail;
                     if (!val.contains('@')) return AppStrings.validInvalidEmail;
                     return null;
                   },
@@ -133,9 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefixIcon: Icons.lock_outline_rounded,
                   isPassword: true,
                   validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return AppStrings.validPassword;
-                    }
+                    if (val == null || val.isEmpty) return AppStrings.validPassword;
                     return null;
                   },
                 ),
@@ -147,9 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (_) => const ForgotPasswordScreen(),
-                        ),
+                        MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
                       );
                     },
                     child: const Text(
@@ -164,10 +233,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                CustomPrimaryButton(
-                  text: AppStrings.loginBtn,
-                  onPressed: _handleLogin,
-                ),
+                _isLoading
+                    ? const CircularProgressIndicator(color: AppColors.primaryGreen)
+                    : CustomPrimaryButton(
+                        text: AppStrings.loginBtn,
+                        onPressed: _handleLogin,
+                      ),
                 const SizedBox(height: 28),
 
                 Row(
@@ -184,8 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (_) => const SignupScreen()),
+                          MaterialPageRoute(builder: (_) => const SignupScreen()),
                         );
                       },
                       child: const Text(

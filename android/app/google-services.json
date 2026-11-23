@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312161462069",
+    "project_id": "agri-yard",
+    "storage_bucket": "agri-yard.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312161462069:android:0f175a9fa5870b2fe24e7c",
+        "android_client_info": {
+          "package_name": "com.agriyard.agriyard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpg6U2HsTnTcEGDP4_1tQMPrfyxeeHHes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

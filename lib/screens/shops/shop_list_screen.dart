@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import '../../models/shop_model.dart';
+import '../../widgets/yard_selector_bar.dart';
 
 class ShopListScreen extends StatefulWidget {
   final bool isTab;
@@ -17,6 +18,13 @@ class ShopListScreen extends StatefulWidget {
 class _ShopListScreenState extends State<ShopListScreen> {
   final _searchController = TextEditingController();
   String _query = '';
+  late String _selectedYardId;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedYardId = widget.filterYardId ?? 'all';
+  }
 
   @override
   void dispose() {
@@ -52,19 +60,26 @@ class _ShopListScreenState extends State<ShopListScreen> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.screenPaddingH,
-            vertical: AppDimensions.paddingS,
-          ),
-          child: Column(
-            children: [
-              Container(
+        child: Column(
+          children: [
+            const SizedBox(height: 8),
+            YardSelectorBar(
+              showAllOption: true,
+              selectedYardId: _selectedYardId,
+              onYardSelected: (id) {
+                setState(() {
+                  _selectedYardId = id;
+                });
+              },
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppDimensions.screenPaddingH),
+              child: Container(
                 height: AppDimensions.searchBarHeight,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                      BorderRadius.circular(AppDimensions.radiusL),
+                  borderRadius: BorderRadius.circular(AppDimensions.radiusL),
                   border: Border.all(color: AppColors.border),
                 ),
                 child: TextField(
@@ -102,18 +117,17 @@ class _ShopListScreenState extends State<ShopListScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-
-              Expanded(
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppDimensions.screenPaddingH),
                 child: ListenableBuilder(
                   listenable: AppState(),
                   builder: (context, _) {
                     var shops = AppState().shops;
-                    if (widget.filterYardId != null) {
-                      final filtered = shops
-                          .where((s) => s.yardId == widget.filterYardId)
-                          .toList();
-                      if (filtered.isNotEmpty) shops = filtered;
+                    if (_selectedYardId != 'all') {
+                      shops = shops.where((s) => s.yardId == _selectedYardId).toList();
                     }
                     if (_query.isNotEmpty) {
                       shops = shops
@@ -145,8 +159,8 @@ class _ShopListScreenState extends State<ShopListScreen> {
                   },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

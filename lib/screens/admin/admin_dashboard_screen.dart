@@ -11,7 +11,7 @@ class AdminDashboardScreen extends StatefulWidget {
 }
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
-  String _selectedYard = 'Rajkot Marketing Yard';
+  String _selectedYardId = 'rajkot';
   final _wheatArrivalController = TextEditingController(text: '980');
   final _wheatMinController = TextEditingController(text: '620');
   final _wheatAvgController = TextEditingController(text: '670');
@@ -21,6 +21,39 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   final _soyaMinController = TextEditingController(text: '600');
   final _soyaAvgController = TextEditingController(text: '650');
   final _soyaMaxController = TextEditingController(text: '700');
+
+  @override
+  void initState() {
+    super.initState();
+    if (AppState().yards.isNotEmpty) {
+      _selectedYardId = AppState().yards.first.id;
+    }
+    _loadYardData(_selectedYardId);
+  }
+
+  void _loadYardData(String yardId) {
+    final yardCrops = AppState().getCropsForYard(yardId);
+    if (yardCrops.isEmpty) return;
+
+    final wheat = yardCrops.firstWhere(
+      (c) => c.name.toLowerCase().contains('wheat'),
+      orElse: () => yardCrops.first,
+    );
+    final soya = yardCrops.firstWhere(
+      (c) => c.name.toLowerCase().contains('soya') || c.name.toLowerCase().contains('cotton'),
+      orElse: () => yardCrops.length > 1 ? yardCrops[1] : yardCrops.first,
+    );
+
+    _wheatArrivalController.text = '${wheat.arrivalBags}';
+    _wheatMinController.text = '${wheat.minPrice}';
+    _wheatAvgController.text = '${wheat.avgPrice}';
+    _wheatMaxController.text = '${wheat.maxPrice}';
+
+    _soyaArrivalController.text = '${soya.arrivalBags}';
+    _soyaMinController.text = '${soya.minPrice}';
+    _soyaAvgController.text = '${soya.avgPrice}';
+    _soyaMaxController.text = '${soya.maxPrice}';
+  }
 
   @override
   void dispose() {
@@ -38,6 +71,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   void _saveQuickUpdate() {
     AppState().updateCropPrice(
       cropId: 'wheat',
+      yardId: _selectedYardId,
       arrival: int.tryParse(_wheatArrivalController.text),
       minPrice: int.tryParse(_wheatMinController.text),
       avgPrice: int.tryParse(_wheatAvgController.text),
@@ -46,6 +80,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
     AppState().updateCropPrice(
       cropId: 'soyabean',
+      yardId: _selectedYardId,
       arrival: int.tryParse(_soyaArrivalController.text),
       minPrice: int.tryParse(_soyaMinController.text),
       avgPrice: int.tryParse(_soyaAvgController.text),
@@ -54,7 +89,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Market prices updated successfully!'),
+        content: Text('Market prices updated successfully for this yard!'),
         backgroundColor: AppColors.primaryGreen,
       ),
     );
@@ -86,12 +121,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             color: AppColors.textDark,
           ),
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,
-              backgroundImage: const AssetImage('assets/images/admin_avatar.png'),
+              backgroundImage: AssetImage('assets/images/admin_avatar.png'),
               backgroundColor: AppColors.mintLight,
             ),
           ),
@@ -116,7 +151,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       Expanded(
                         child: _buildMetricCard(
                           title: 'Total Users',
-                          value: '14,520',
+                          value: '${AppState().totalUsersCount}',
                         ),
                       ),
                       const SizedBox(width: 14),
@@ -144,27 +179,44 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
               const Text('Select Yard', style: TextStyle(fontSize: 13, color: AppColors.textLight)),
               const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: _selectedYard,
-                    items: [
-                      'Rajkot Marketing Yard',
-                      'Junagadh Marketing Yard',
-                      'Gondal Marketing Yard',
-                      'Mendarda Marketing Yard',
-                    ].map((y) => DropdownMenuItem(value: y, child: Text(y, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))).toList(),
-                    onChanged: (val) {
-                      if (val != null) setState(() => _selectedYard = val);
-                    },
-                  ),
-                ),
+              ListenableBuilder(
+                listenable: AppState(),
+                builder: (context, _) {
+                  final yards = AppState().yards;
+                  if (!yards.any((y) => y.id == _selectedYardId) && yards.isNotEmpty) {
+                    _selectedYardId = yards.first.id;
+                  }
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.border),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        value: _selectedYardId,
+                        items: yards
+                            .map((y) => DropdownMenuItem(
+                                  value: y.id,
+                                  child: Text(y.name,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
+                                ))
+                            .toList(),
+                        onChanged: (val) {
+                          if (val != null) {
+                            setState(() {
+                              _selectedYardId = val;
+                              _loadYardData(val);
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 14),
 

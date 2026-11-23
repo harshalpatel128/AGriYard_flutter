@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import '../../models/crop_model.dart';
+import '../../widgets/yard_selector_bar.dart';
 import 'crop_detail_screen.dart';
 
 // Screen displaying daily market prices for all crops
@@ -50,39 +51,83 @@ class MarketRatesScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: ListenableBuilder(
-          listenable: AppState(),
-          builder: (context, _) {
-            final crops = AppState().crops;
-            return ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.screenPaddingH,
-                vertical: AppDimensions.paddingM,
-              ),
-              itemCount: crops.length + 1,
-              separatorBuilder: (_, __) =>
-                  const Divider(height: 20, color: AppColors.borderLight),
-              itemBuilder: (context, index) {
-                if (index < crops.length) {
-                  return _buildCropRateRow(context, crops[index]);
-                } else {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Center(
-                      child: Text(
-                        AppStrings.marketRatesDisclaimer,
-                        style: TextStyle(
-                          fontSize: AppDimensions.textSM,
-                          color: AppColors.textMuted,
-                          fontStyle: FontStyle.italic,
+        child: Column(
+          children: [
+            const SizedBox(height: 8),
+            const YardSelectorBar(),
+            const SizedBox(height: 6),
+            ListenableBuilder(
+              listenable: AppState(),
+              builder: (context, _) {
+                final currentYard = AppState().currentYard;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimensions.screenPaddingH,
+                    vertical: 4,
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.location_on, size: 16, color: AppColors.primaryGreen),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Market: ${currentYard?.name ?? "Rajkot APMC"}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textMedium,
                         ),
                       ),
-                    ),
-                  );
-                }
+                    ],
+                  ),
+                );
               },
-            );
-          },
+            ),
+            const Divider(height: 12, color: AppColors.borderLight),
+            Expanded(
+              child: ListenableBuilder(
+                listenable: AppState(),
+                builder: (context, _) {
+                  final crops = AppState().cropsForSelectedYard;
+                  if (crops.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        'No crops available for this yard',
+                        style: TextStyle(color: AppColors.textMuted),
+                      ),
+                    );
+                  }
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimensions.screenPaddingH,
+                      vertical: AppDimensions.paddingM,
+                    ),
+                    itemCount: crops.length + 1,
+                    separatorBuilder: (_, __) =>
+                        const Divider(height: 20, color: AppColors.borderLight),
+                    itemBuilder: (context, index) {
+                      if (index < crops.length) {
+                        return _buildCropRateRow(context, crops[index]);
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: Center(
+                            child: Text(
+                              AppStrings.marketRatesDisclaimer,
+                              style: TextStyle(
+                                fontSize: AppDimensions.textSM,
+                                color: AppColors.textMuted,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

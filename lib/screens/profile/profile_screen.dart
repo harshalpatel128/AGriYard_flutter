@@ -4,7 +4,6 @@ import '../../services/app_state.dart';
 import '../../widgets/app_curved_header.dart';
 import '../../widgets/custom_button.dart';
 import '../auth/login_screen.dart';
-import '../admin/admin_navigation_screen.dart';
 import 'change_password_screen.dart';
 import 'contact_help_screen.dart';
 
@@ -162,23 +161,7 @@ class ProfileScreen extends StatelessWidget {
                           )
                         else
                           const SizedBox(width: 48),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.settings_outlined,
-                            color: Colors.white,
-                            size: AppDimensions.iconXXL - 2,
-                          ),
-                          tooltip: 'Admin Settings',
-                          onPressed: () {
-                            AppState().setAdminMode(true);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const AdminNavigationScreen(),
-                              ),
-                            );
-                          },
-                        ),
+                        const SizedBox(width: 48),
                       ],
                     ),
                     const SizedBox(height: 4),

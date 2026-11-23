@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../resources/resources.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
@@ -21,6 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -32,7 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _handleSignup() {
+  Future<void> _handleSignup() async {
     if (_formKey.currentState?.validate() ?? false) {
       if (_passwordController.text != _confirmPasswordController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -44,18 +47,55 @@ class _SignupScreenState extends State<SignupScreen> {
         return;
       }
 
-      AppState().signup(
-        name: _nameController.text.trim(),
-        phone: _phoneController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      );
+      setState(() => _isLoading = true);
+      try {
+        // Firebase Auth માં account બનાવો
+        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
 
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
-        (route) => false,
-      );
+        // Firestore Database માં user ની info save કરો
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(credential.user?.uid)
+            .set({
+          'uid': credential.user?.uid,
+          'name': _nameController.text.trim(),
+          'phone': _phoneController.text.trim(),
+          'email': _emailController.text.trim(),
+          'createdAt': FieldValue.serverTimestamp(),
+          'role': 'farmer',
+        });
+
+        // App State update કરો
+        AppState().signup(
+          name: _nameController.text.trim(),
+          phone: _phoneController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+            (route) => false,
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        String msg = 'Signup failed. Please try again.';
+        if (e.code == 'email-already-in-use') msg = 'This email is already registered.';
+        if (e.code == 'weak-password') msg = 'Password is too weak. Use at least 6 characters.';
+        if (e.code == 'invalid-email') msg = 'Invalid email format.';
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: AppColors.error),
+          );
+        }
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -183,10 +223,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                CustomPrimaryButton(
-                  text: AppStrings.signupBtn,
-                  onPressed: _handleSignup,
-                ),
+                _isLoading
+                    ? const CircularProgressIndicator(color: AppColors.primaryGreen)
+                    : CustomPrimaryButton(
+                        text: AppStrings.signupBtn,
+                        onPressed: _handleSignup,
+                      ),
                 const SizedBox(height: 20),
 
                 Row(
