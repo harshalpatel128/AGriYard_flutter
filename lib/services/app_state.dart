@@ -128,7 +128,7 @@ class AppState extends ChangeNotifier {
     return _shops.where((s) => s.yardId == yardId).toList();
   }
 
-  int get totalUsersCount => AppConstants.baseUserCount + _users.length - 3;
+  int get totalUsersCount => _users.length;
   int get activeYardsCount =>
       _yards.length > 4 ? _yards.length : AppConstants.minActiveYardsCount;
 
@@ -142,7 +142,7 @@ class AppState extends ChangeNotifier {
     _yards = MockData.getYards();
     _crops = MockData.getCrops();
     _shops = MockData.getShops();
-    _users = MockData.getUsers();
+    _users = [];
     _loadFromPreferences();
     _syncWithFirebase();
   }
@@ -314,22 +314,37 @@ class AppState extends ChangeNotifier {
 
       // 6. Sync Registered Users
       firestore.collection('users').snapshots().listen((snap) {
-        if (snap.docs.isNotEmpty) {
-          final List<UserModel> remoteUsers = [];
-          for (var doc in snap.docs) {
-            final data = doc.data();
-            remoteUsers.add(UserModel(
-              id: data['uid'] ?? doc.id,
-              name: data['name'] ?? 'User',
-              phoneNumber: data['phone'] ?? '',
-              email: data['email'] ?? '',
-            ));
-          }
-          if (remoteUsers.isNotEmpty) {
-            _users = remoteUsers;
-            notifyListeners();
-          }
+        final List<UserModel> remoteUsers = [];
+        for (var doc in snap.docs) {
+          final data = doc.data();
+          final rawName = (data['name'] ?? '').toString().trim();
+          final fName = (data['firstName'] ?? '').toString().trim();
+          final lName = (data['lastName'] ?? '').toString().trim();
+          final email = (data['email'] ?? '').toString().trim();
+          final phone = (data['phone'] ?? data['phoneNumber'] ?? '').toString().trim();
+
+          final resolvedName = rawName.isNotEmpty
+              ? rawName
+              : ('$fName $lName'.trim().isNotEmpty
+                  ? '$fName $lName'.trim()
+                  : (email.isNotEmpty
+                      ? email.split('@').first
+                      : (phone.isNotEmpty ? phone : 'Farmer')));
+
+          remoteUsers.add(UserModel(
+            id: data['uid'] ?? doc.id,
+            name: resolvedName,
+            phoneNumber: phone,
+            email: email,
+            role: (data['role'] ?? (isAdminEmail(email) ? 'Admin' : 'Farmer')).toString(),
+            createdAt: data['createdAt'] != null ? data['createdAt'].toString() : null,
+            isBlocked: data['isBlocked'] == true,
+            isActive: data['isBlocked'] != true,
+          ));
         }
+        _users = remoteUsers;
+        _saveUsersToPreferences();
+        notifyListeners();
       }, onError: (_) {});
     } catch (_) {}
   }
@@ -366,7 +381,28 @@ class AppState extends ChangeNotifier {
           });
         } catch (_) {}
       }
+      final savedUsersJson = prefs.getString('saved_registered_users');
+      if (savedUsersJson != null && savedUsersJson.isNotEmpty) {
+        try {
+          final List<dynamic> list = jsonDecode(savedUsersJson);
+          final loaded = list
+              .map((item) => UserModel.fromJson(Map<String, dynamic>.from(item)))
+              .where((u) => u.name != 'Ramesh Patel' && u.name != 'Suresh Bhai' && u.name != 'Vijay Kumar')
+              .toList();
+          if (loaded.isNotEmpty) {
+            _users = loaded;
+          }
+        } catch (_) {}
+      }
       notifyListeners();
+    } catch (_) {}
+  }
+
+  Future<void> _saveUsersToPreferences() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userListJson = jsonEncode(_users.map((u) => u.toJson()).toList());
+      await prefs.setString('saved_registered_users', userListJson);
     } catch (_) {}
   }
 
