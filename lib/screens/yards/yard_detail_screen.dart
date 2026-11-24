@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../models/yard_model.dart';
 import '../../services/app_state.dart';
+import '../../widgets/yard_image_view.dart';
 import '../market/market_rates_screen.dart';
 import '../shops/shop_list_screen.dart';
 
@@ -60,13 +61,9 @@ class _YardDetailScreenState extends State<YardDetailScreen> {
                           ],
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child: Image.asset(
-                          widget.yard.imageAsset,
+                        child: YardImageView(
+                          imagePath: widget.yard.imageAsset,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Container(
-                            color: AppColors.mintLight,
-                            child: const Icon(Icons.business, size: 60, color: AppColors.primaryGreen),
-                          ),
                         ),
                       ),
                       const SizedBox(height: 20),

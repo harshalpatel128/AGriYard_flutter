@@ -357,6 +357,15 @@ class AppState extends ChangeNotifier {
           if (c.isNotEmpty) _adminEmails.add(c);
         }
       }
+      final savedPassJson = prefs.getString('saved_admin_passwords');
+      if (savedPassJson != null) {
+        try {
+          final Map<String, dynamic> decoded = jsonDecode(savedPassJson);
+          decoded.forEach((k, v) {
+            _adminPasswords[k.toLowerCase()] = v.toString();
+          });
+        } catch (_) {}
+      }
       notifyListeners();
     } catch (_) {}
   }
@@ -365,6 +374,7 @@ class AppState extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setStringList('saved_admin_emails', _adminEmails.toList());
+      await prefs.setString('saved_admin_passwords', jsonEncode(_adminPasswords));
     } catch (_) {}
   }
 
@@ -412,12 +422,18 @@ class AppState extends ChangeNotifier {
     if (isAdminEmail(email)) {
       _isAdminMode = true;
     }
-    _currentUser = UserModel(
-      id: 'user_${DateTime.now().millisecondsSinceEpoch}',
-      name: email.split('@').first,
-      phoneNumber: '9876543210',
-      email: email,
+    final userInList = _users.firstWhere(
+      (u) => u.email.toLowerCase() == email.toLowerCase(),
+      orElse: () => UserModel(
+        id: 'user_${DateTime.now().millisecondsSinceEpoch}',
+        name: _currentUser.name.isNotEmpty && _currentUser.email == email
+            ? _currentUser.name
+            : email.split('@').first,
+        phoneNumber: _currentUser.phoneNumber.isNotEmpty ? _currentUser.phoneNumber : '9876543210',
+        email: email,
+      ),
     );
+    _currentUser = userInList;
     _saveAuthToPreferences();
     notifyListeners();
   }
@@ -450,24 +466,107 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── Password Management ───────────────────────────────────────────────────────
+  Future<bool> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final email = _currentUser.email.trim().toLowerCase();
+
+    if (user != null && user.email != null) {
+      try {
+        final cred = EmailAuthProvider.credential(
+          email: user.email!,
+          password: currentPassword,
+        );
+        await user.reauthenticateWithCredential(cred);
+        await user.updatePassword(newPassword);
+      } catch (_) {
+        try {
+          await user.updatePassword(newPassword);
+        } catch (_) {}
+      }
+    }
+
+    if (isAdminEmail(email)) {
+      _adminPasswords[email] = newPassword;
+      await _saveAdminsToPreferences();
+      try {
+        await FirebaseFirestore.instance.collection('admins').doc(email).set({
+          'password': newPassword,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      } catch (_) {}
+    }
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_password_$email', newPassword);
+      if (_currentUser.phoneNumber.isNotEmpty) {
+        await prefs.setString('user_password_${_currentUser.phoneNumber}', newPassword);
+      }
+    } catch (_) {}
+
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> resetPasswordForPhoneOrEmail(String identifier, String newPassword) async {
+    final clean = identifier.trim().toLowerCase();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        await user.updatePassword(newPassword);
+      } catch (_) {}
+    }
+
+    if (isAdminEmail(clean)) {
+      _adminPasswords[clean] = newPassword;
+      await _saveAdminsToPreferences();
+      try {
+        await FirebaseFirestore.instance.collection('admins').doc(clean).set({
+          'password': newPassword,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      } catch (_) {}
+    }
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_password_$clean', newPassword);
+    } catch (_) {}
+
+    notifyListeners();
+    return true;
+  }
+
   // ── Admin Management ──────────────────────────────────────────────────────────
-  Future<bool> addAdmin(String email) async {
+  Future<bool> addAdmin(String email, {String? password}) async {
     final clean = email.trim().toLowerCase();
     if (clean.isEmpty) return false;
 
     _adminEmails.add(clean);
+    if (password != null && password.trim().isNotEmpty) {
+      _adminPasswords[clean] = password.trim();
+    }
     await _saveAdminsToPreferences();
     notifyListeners();
 
     try {
       final firestore = FirebaseFirestore.instance;
-      // Write document with clean email as ID
-      await firestore.collection('admins').doc(clean).set({
+      final docData = <String, dynamic>{
         'email': clean,
         'role': 'admin',
         'createdAt': FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),
-      }, SetOptions(merge: true));
+      };
+      if (password != null && password.trim().isNotEmpty) {
+        docData['password'] = password.trim();
+      }
+
+      // Write document with clean email as ID
+      await firestore.collection('admins').doc(clean).set(docData, SetOptions(merge: true));
 
       // Also ensure super admin exists in Firestore
       await firestore.collection('admins').doc(superAdminEmail.toLowerCase()).set({
@@ -475,6 +574,16 @@ class AppState extends ChangeNotifier {
         'role': 'super_admin',
         'updatedAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
+
+      // Try creating account in Firebase Auth if password was provided and valid
+      if (password != null && password.trim().length >= 6) {
+        try {
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: clean,
+            password: password.trim(),
+          );
+        } catch (_) {}
+      }
 
       debugPrint('Admin $clean successfully stored in Firebase collection "admins"');
       return true;

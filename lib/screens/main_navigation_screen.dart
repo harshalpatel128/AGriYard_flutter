@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../services/app_state.dart';
 import '../widgets/custom_bottom_nav.dart';
+import 'admin/admin_navigation_screen.dart';
 import 'home/home_screen.dart';
 import 'market/market_rates_screen.dart';
 import 'market/price_rise_screen.dart';
@@ -52,6 +55,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         body: IndexedStack(
           index: _currentIndex,
           children: screens,
+        ),
+        floatingActionButton: ListenableBuilder(
+          listenable: AppState(),
+          builder: (context, _) {
+            if (!AppState().canSwitchToAdmin) return const SizedBox.shrink();
+            return FloatingActionButton.extended(
+              heroTag: 'back_to_admin_btn',
+              backgroundColor: AppColors.primaryGreen,
+              elevation: 4,
+              icon: const Icon(Icons.admin_panel_settings_rounded, color: Colors.white, size: 20),
+              label: const Text('Back to Admin', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+              onPressed: () {
+                AppState().setAdminMode(true);
+                AppState().setAdminPreviewMode(false);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+                );
+              },
+            );
+          },
         ),
         bottomNavigationBar: CustomBottomNav(
           currentIndex: _currentIndex,

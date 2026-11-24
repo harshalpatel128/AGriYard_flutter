@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../resources/resources.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
@@ -36,6 +37,19 @@ class _LoginScreenState extends State<LoginScreen> {
       final email = _emailController.text.trim();
       final password = _passwordController.text;
       final isAdmin = AppState().isAdminEmail(email);
+
+      // Fast-track authorized admin login if password matches admin record
+      if (isAdmin && AppState().verifyAdminPassword(email, password)) {
+        AppState().login(email: email, password: password);
+        AppState().setAdminMode(true);
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+          );
+        }
+        return;
+      }
 
       setState(() => _isLoading = true);
       try {
@@ -89,6 +103,29 @@ class _LoginScreenState extends State<LoginScreen> {
               return;
             }
           }
+        }
+
+        // Check if user has updated/reset password locally
+        final prefs = await SharedPreferences.getInstance();
+        final localSaved = prefs.getString('user_password_$email');
+        if (localSaved != null && localSaved == password) {
+          AppState().login(email: email, password: password);
+          if (mounted) {
+            if (isAdmin) {
+              AppState().setAdminMode(true);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+              );
+            } else {
+              AppState().setAdminMode(false);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+              );
+            }
+          }
+          return;
         }
 
         String msg = 'Login failed. Please try again.';

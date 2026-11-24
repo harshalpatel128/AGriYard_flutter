@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../../resources/resources.dart';
 import '../../services/app_state.dart';
 import '../../widgets/app_curved_header.dart';
+import '../../widgets/yard_image_view.dart';
 import '../yards/yard_detail_screen.dart';
 import '../market/price_rise_screen.dart';
 import '../market/price_fall_screen.dart';
+import '../admin/admin_navigation_screen.dart';
 import 'search_results_screen.dart';
 
 // Main dashboard displaying featured market yards and price trends
@@ -181,6 +183,52 @@ class HomeScreen extends StatelessWidget {
                               color: Colors.white,
                               size: AppDimensions.iconXXL),
                           onPressed: () => _showDrawer(context),
+                        ),
+                        ListenableBuilder(
+                          listenable: AppState(),
+                          builder: (context, _) {
+                            if (!AppState().canSwitchToAdmin) return const SizedBox.shrink();
+                            return InkWell(
+                              onTap: () {
+                                AppState().setAdminMode(true);
+                                AppState().setAdminPreviewMode(false);
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => const AdminNavigationScreen()),
+                                );
+                              },
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.admin_panel_settings_rounded, size: 16, color: AppColors.primaryGreen),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      'Admin Panel',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryGreen,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         IconButton(
                           icon: const Icon(
@@ -485,15 +533,9 @@ class HomeScreen extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.asset(
-                    yard.imageAsset,
+                  YardImageView(
+                    imagePath: yard.imageAsset,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
-                      color: AppColors.mintLight,
-                      child: const Icon(Icons.business,
-                          size: AppDimensions.iconHuge,
-                          color: AppColors.primaryGreen),
-                    ),
                   ),
                   Positioned(
                     bottom: 0,

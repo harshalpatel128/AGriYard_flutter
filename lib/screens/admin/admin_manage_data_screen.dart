@@ -6,7 +6,9 @@ import '../../models/crop_model.dart';
 import '../../models/shop_model.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/yard_selector_bar.dart';
+import '../../widgets/yard_image_view.dart';
 import '../auth/login_screen.dart';
+import '../main_navigation_screen.dart';
 
 class AdminManageDataScreen extends StatefulWidget {
   const AdminManageDataScreen({super.key});
@@ -38,78 +40,155 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
     final cityController = TextEditingController(text: existing?.city ?? '');
     final shopsController = TextEditingController(text: existing?.totalShops ?? '100+ Shops');
     final phoneController = TextEditingController(text: existing?.contactNumber ?? '0281 2400000');
+    final imageController = TextEditingController(text: existing?.imageAsset ?? '');
 
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(existing == null ? 'Add New Yard' : 'Edit Yard', style: const TextStyle(fontWeight: FontWeight.bold)),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Yard Name'),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: cityController,
-                decoration: const InputDecoration(labelText: 'City (e.g. Rajkot, Gondal)'),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: shopsController,
-                decoration: const InputDecoration(labelText: 'Total Shops (e.g. 150+ Shops)'),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: phoneController,
-                keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(labelText: 'Contact Phone'),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel', style: TextStyle(color: AppColors.textMedium)),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primaryGreen,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Text(existing == null ? 'Add New Yard' : 'Edit Yard', style: const TextStyle(fontWeight: FontWeight.bold)),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(labelText: 'Yard Name'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: cityController,
+                  decoration: const InputDecoration(labelText: 'City (e.g. Rajkot, Gondal)'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: shopsController,
+                  decoration: const InputDecoration(labelText: 'Total Shops (e.g. 150+ Shops)'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(labelText: 'Contact Phone'),
+                ),
+                const SizedBox(height: 14),
+                const Text('Yard Photo / Image (Optional)', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                const SizedBox(height: 4),
+                TextField(
+                  controller: imageController,
+                  onChanged: (_) => setDialogState(() {}),
+                  decoration: InputDecoration(
+                    hintText: 'Paste Image URL or leave empty for blank',
+                    suffixIcon: imageController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear, size: 18),
+                            onPressed: () {
+                              imageController.clear();
+                              setDialogState(() {});
+                            },
+                          )
+                        : null,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    ActionChip(
+                      label: const Text('Blank (No Image)', style: TextStyle(fontSize: 11)),
+                      avatar: const Icon(Icons.image_not_supported_outlined, size: 14),
+                      onPressed: () {
+                        imageController.clear();
+                        setDialogState(() {});
+                      },
+                    ),
+                    ActionChip(
+                      label: const Text('Rajkot photo', style: TextStyle(fontSize: 11)),
+                      onPressed: () {
+                        imageController.text = 'assets/images/yard_rajkot.png';
+                        setDialogState(() {});
+                      },
+                    ),
+                    ActionChip(
+                      label: const Text('Gondal photo', style: TextStyle(fontSize: 11)),
+                      onPressed: () {
+                        imageController.text = 'assets/images/yard_gondal.png';
+                        setDialogState(() {});
+                      },
+                    ),
+                    ActionChip(
+                      label: const Text('Junagadh photo', style: TextStyle(fontSize: 11)),
+                      onPressed: () {
+                        imageController.text = 'assets/images/yard_junagadh.png';
+                        setDialogState(() {});
+                      },
+                    ),
+                  ],
+                ),
+                if (imageController.text.trim().isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.borderLight),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: YardImageView(
+                      imagePath: imageController.text.trim(),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ],
             ),
-            onPressed: () {
-              if (nameController.text.trim().isNotEmpty) {
-                if (existing == null) {
-                  final newYard = YardModel(
-                    id: 'yard_${DateTime.now().millisecondsSinceEpoch}',
-                    name: nameController.text.trim(),
-                    city: cityController.text.trim(),
-                    address: '${cityController.text.trim()} Main Road, Gujarat',
-                    contactNumber: phoneController.text.trim(),
-                    totalShops: shopsController.text.trim(),
-                    establishedYear: '2000',
-                    imageAsset: 'assets/images/yard_rajkot.png',
-                  );
-                  AppState().addYard(newYard);
-                } else {
-                  final updated = existing.copyWith(
-                    name: nameController.text.trim(),
-                    city: cityController.text.trim(),
-                    totalShops: shopsController.text.trim(),
-                    contactNumber: phoneController.text.trim(),
-                  );
-                  AppState().updateYard(updated);
-                }
-              }
-              Navigator.pop(ctx);
-            },
-            child: Text(existing == null ? 'Add' : 'Save', style: const TextStyle(color: Colors.white)),
           ),
-        ],
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel', style: TextStyle(color: AppColors.textMedium)),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryGreen,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+              onPressed: () {
+                if (nameController.text.trim().isNotEmpty) {
+                  final imgPath = imageController.text.trim();
+                  if (existing == null) {
+                    final newYard = YardModel(
+                      id: 'yard_${DateTime.now().millisecondsSinceEpoch}',
+                      name: nameController.text.trim(),
+                      city: cityController.text.trim(),
+                      address: '${cityController.text.trim()} Main Road, Gujarat',
+                      contactNumber: phoneController.text.trim(),
+                      totalShops: shopsController.text.trim(),
+                      establishedYear: '2000',
+                      imageAsset: imgPath,
+                    );
+                    AppState().addYard(newYard);
+                  } else {
+                    final updated = existing.copyWith(
+                      name: nameController.text.trim(),
+                      city: cityController.text.trim(),
+                      totalShops: shopsController.text.trim(),
+                      contactNumber: phoneController.text.trim(),
+                      imageAsset: imgPath,
+                    );
+                    AppState().updateYard(updated);
+                  }
+                }
+                Navigator.pop(ctx);
+              },
+              child: Text(existing == null ? 'Add' : 'Save', style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -389,8 +468,43 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
             color: AppColors.textDark,
           ),
         ),
-        actions: const [
-          Padding(
+        actions: [
+          InkWell(
+            onTap: () {
+              AppState().setAdminPreviewMode(true);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+              );
+            },
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFEFF7EE),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.primaryGreen, width: 1.2),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.visibility_rounded, size: 16, color: AppColors.primaryGreen),
+                  SizedBox(width: 4),
+                  Text(
+                    'User View',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryGreen,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          const Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,
@@ -456,14 +570,11 @@ class _AdminManageDataScreenState extends State<AdminManageDataScreen> with Sing
                     ),
                     child: Row(
                       children: [
-                        Container(
+                        YardImageView(
+                          imagePath: yard.imageAsset,
                           width: 44,
                           height: 44,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF1F5F2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(Icons.domain_rounded, color: AppColors.textMedium, size: 22),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         const SizedBox(width: 14),
                         Expanded(

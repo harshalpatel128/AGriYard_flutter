@@ -131,96 +131,99 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = AppState().currentUser;
+    return ListenableBuilder(
+      listenable: AppState(),
+      builder: (context, _) {
+        final user = AppState().currentUser;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AppCurvedHeader(
-              height: AppDimensions.profileHeaderHeight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.paddingXL,
-                  vertical: AppDimensions.paddingS,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                AppCurvedHeader(
+                  height: AppDimensions.profileHeaderHeight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimensions.paddingXL,
+                      vertical: AppDimensions.paddingS,
+                    ),
+                    child: Column(
                       children: [
-                        if (!isTab)
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: AppDimensions.iconM,
-                              color: Colors.white,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (!isTab)
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_back_ios_new_rounded,
+                                  size: AppDimensions.iconM,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              )
+                            else
+                              const SizedBox(width: 48),
+                            const SizedBox(width: 48),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+
+                        Container(
+                          width: AppDimensions.avatarLarge,
+                          height: AppDimensions.avatarLarge,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(color: Colors.white, width: 2.5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 8,
+                              ),
+                            ],
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.asset(
+                            AppAssets.userAvatar,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => const Icon(
+                              Icons.person,
+                              size: 48,
+                              color: AppColors.primaryGreen,
                             ),
-                            onPressed: () => Navigator.pop(context),
-                          )
-                        else
-                          const SizedBox(width: 48),
-                        const SizedBox(width: 48),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+
+                        Text(
+                          user.name,
+                          style: const TextStyle(
+                            fontSize: AppDimensions.textHeading,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          user.phoneNumber,
+                          style: const TextStyle(
+                            fontSize: AppDimensions.textM,
+                            color: Color(0xFFD4EED8),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          user.email,
+                          style: const TextStyle(
+                            fontSize: AppDimensions.textM,
+                            color: Color(0xFFD4EED8),
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 4),
-
-                    Container(
-                      width: AppDimensions.avatarLarge,
-                      height: AppDimensions.avatarLarge,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        border: Border.all(color: Colors.white, width: 2.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 8,
-                          ),
-                        ],
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.asset(
-                        AppAssets.userAvatar,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Icon(
-                          Icons.person,
-                          size: 48,
-                          color: AppColors.primaryGreen,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-
-                    Text(
-                      user.name,
-                      style: const TextStyle(
-                        fontSize: AppDimensions.textHeading,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      user.phoneNumber,
-                      style: const TextStyle(
-                        fontSize: AppDimensions.textM,
-                        color: Color(0xFFD4EED8),
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      user.email,
-                      style: const TextStyle(
-                        fontSize: AppDimensions.textM,
-                        color: Color(0xFFD4EED8),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
 
             const SizedBox(height: 16),
 
@@ -275,6 +278,8 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+      },
     );
   }
 

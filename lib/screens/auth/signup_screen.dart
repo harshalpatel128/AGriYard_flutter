@@ -18,7 +18,8 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -27,7 +28,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -47,6 +49,10 @@ class _SignupScreenState extends State<SignupScreen> {
         return;
       }
 
+      final firstName = _firstNameController.text.trim();
+      final lastName = _lastNameController.text.trim();
+      final fullName = '$firstName $lastName'.trim();
+
       setState(() => _isLoading = true);
       try {
         // Firebase Auth માં account બનાવો
@@ -54,6 +60,7 @@ class _SignupScreenState extends State<SignupScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
+        await credential.user?.updateDisplayName(fullName);
 
         // Firestore Database માં user ની info save કરો
         await FirebaseFirestore.instance
@@ -61,7 +68,9 @@ class _SignupScreenState extends State<SignupScreen> {
             .doc(credential.user?.uid)
             .set({
           'uid': credential.user?.uid,
-          'name': _nameController.text.trim(),
+          'name': fullName,
+          'firstName': firstName,
+          'lastName': lastName,
           'phone': _phoneController.text.trim(),
           'email': _emailController.text.trim(),
           'createdAt': FieldValue.serverTimestamp(),
@@ -70,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
         // App State update કરો
         AppState().signup(
-          name: _nameController.text.trim(),
+          name: fullName,
           phone: _phoneController.text.trim(),
           email: _emailController.text.trim(),
           password: _passwordController.text,
@@ -164,14 +173,32 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                CustomInputField(
-                  label: AppStrings.labelFullName,
-                  hintText: AppStrings.hintFullName,
-                  controller: _nameController,
-                  prefixIcon: Icons.person_outline_rounded,
-                  validator: (v) => (v == null || v.trim().isEmpty)
-                      ? AppStrings.validFullName
-                      : null,
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomInputField(
+                        label: 'First Name',
+                        hintText: 'e.g. Ramesh',
+                        controller: _firstNameController,
+                        prefixIcon: Icons.person_outline_rounded,
+                        validator: (v) => (v == null || v.trim().isEmpty)
+                            ? 'Enter first name'
+                            : null,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: CustomInputField(
+                        label: 'Last Name',
+                        hintText: 'e.g. Patel',
+                        controller: _lastNameController,
+                        prefixIcon: Icons.person_outline_rounded,
+                        validator: (v) => (v == null || v.trim().isEmpty)
+                            ? 'Enter last name'
+                            : null,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 14),
 

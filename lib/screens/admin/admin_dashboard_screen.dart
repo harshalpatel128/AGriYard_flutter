@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../auth/login_screen.dart';
+import '../main_navigation_screen.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -121,8 +122,43 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             color: AppColors.textDark,
           ),
         ),
-        actions: const [
-          Padding(
+        actions: [
+          InkWell(
+            onTap: () {
+              AppState().setAdminPreviewMode(true);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+              );
+            },
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFEFF7EE),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.primaryGreen, width: 1.2),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.visibility_rounded, size: 16, color: AppColors.primaryGreen),
+                  SizedBox(width: 4),
+                  Text(
+                    'User View',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryGreen,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          const Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,

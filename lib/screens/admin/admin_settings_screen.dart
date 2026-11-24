@@ -3,6 +3,7 @@ import '../../theme/app_colors.dart';
 import '../../services/app_state.dart';
 import '../../widgets/custom_button.dart';
 import '../auth/login_screen.dart';
+import '../main_navigation_screen.dart';
 
 class AdminSettingsScreen extends StatelessWidget {
   const AdminSettingsScreen({super.key});
@@ -59,7 +60,9 @@ class AdminSettingsScreen extends StatelessWidget {
 
   void _showAddAdminDialog(BuildContext context) {
     final emailController = TextEditingController();
+    final passwordController = TextEditingController(text: 'admin123');
     bool isSaving = false;
+    bool obscurePass = false;
 
     showDialog(
       context: context,
@@ -77,7 +80,7 @@ class AdminSettingsScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Enter email address to grant Admin Panel access (stored in Firebase "admins" collection):', style: TextStyle(fontSize: 14, color: AppColors.textMedium)),
+              const Text('Enter email and initial password for the new admin (stored in Firebase):', style: TextStyle(fontSize: 13, color: AppColors.textMedium)),
               const SizedBox(height: 12),
               TextField(
                 controller: emailController,
@@ -87,6 +90,20 @@ class AdminSettingsScreen extends StatelessWidget {
                   labelText: 'Admin Email',
                   hintText: 'admin@rku.ac.in',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: passwordController,
+                obscureText: obscurePass,
+                enabled: !isSaving,
+                decoration: InputDecoration(
+                  labelText: 'Admin Password (min 6 chars)',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  suffixIcon: IconButton(
+                    icon: Icon(obscurePass ? Icons.visibility_off : Icons.visibility, size: 20),
+                    onPressed: () => setDialogState(() => obscurePass = !obscurePass),
+                  ),
                 ),
               ),
               if (isSaving) ...[
@@ -119,9 +136,13 @@ class AdminSettingsScreen extends StatelessWidget {
                   ? null
                   : () async {
                       final email = emailController.text.trim();
+                      final password = passwordController.text.trim();
                       if (email.isNotEmpty && email.contains('@')) {
                         setDialogState(() => isSaving = true);
-                        final success = await AppState().addAdmin(email);
+                        final success = await AppState().addAdmin(
+                          email,
+                          password: password.isNotEmpty ? password : null,
+                        );
                         if (ctx.mounted) {
                           Navigator.pop(ctx);
                         }
@@ -219,8 +240,43 @@ class AdminSettingsScreen extends StatelessWidget {
             color: AppColors.textDark,
           ),
         ),
-        actions: const [
-          Padding(
+        actions: [
+          InkWell(
+            onTap: () {
+              AppState().setAdminPreviewMode(true);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+              );
+            },
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFEFF7EE),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.primaryGreen, width: 1.2),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.visibility_rounded, size: 16, color: AppColors.primaryGreen),
+                  SizedBox(width: 4),
+                  Text(
+                    'User View',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryGreen,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          const Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 16,

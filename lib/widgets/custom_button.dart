@@ -11,6 +11,7 @@ class CustomPrimaryButton extends StatelessWidget {
   final double height;
   final double borderRadius;
   final bool hasArrow;
+  final bool isLoading;
 
   const CustomPrimaryButton({
     super.key,
@@ -23,6 +24,7 @@ class CustomPrimaryButton extends StatelessWidget {
     this.height = 50,
     this.borderRadius = 10,
     this.hasArrow = false,
+    this.isLoading = false,
   });
 
   @override
@@ -31,7 +33,7 @@ class CustomPrimaryButton extends StatelessWidget {
       width: isFullWidth ? double.infinity : null,
       height: height,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
@@ -41,28 +43,37 @@ class CustomPrimaryButton extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20),
         ),
-        child: Row(
-          mainAxisSize: isFullWidth ? MainAxisSize.max : MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, size: 20, color: textColor),
-              const SizedBox(width: 8),
-            ],
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: textColor,
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.2,
+                  color: Colors.white,
+                ),
+              )
+            : Row(
+                mainAxisSize: isFullWidth ? MainAxisSize.max : MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null) ...[
+                    Icon(icon, size: 20, color: textColor),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: textColor,
+                    ),
+                  ),
+                  if (hasArrow) ...[
+                    const SizedBox(width: 6),
+                    Icon(Icons.arrow_forward, size: 18, color: textColor),
+                  ],
+                ],
               ),
-            ),
-            if (hasArrow) ...[
-              const SizedBox(width: 6),
-              Icon(Icons.arrow_forward, size: 18, color: textColor),
-            ],
-          ],
-        ),
       ),
     );
   }

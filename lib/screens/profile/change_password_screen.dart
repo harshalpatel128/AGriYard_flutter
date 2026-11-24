@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../resources/resources.dart';
+import '../../services/app_state.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 
@@ -15,6 +16,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _newController = TextEditingController();
   final _confirmController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -24,7 +26,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
-  void _saveChanges() {
+  Future<void> _saveChanges() async {
     if (_formKey.currentState?.validate() ?? false) {
       if (_newController.text != _confirmController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -36,13 +38,43 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Password changed successfully!'),
-          backgroundColor: AppColors.primaryGreen,
-        ),
-      );
-      Navigator.pop(context);
+      setState(() => _isLoading = true);
+      try {
+        final success = await AppState().updatePassword(
+          currentPassword: _currentController.text.trim(),
+          newPassword: _newController.text.trim(),
+        );
+
+        if (mounted) {
+          if (success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Password changed successfully!'),
+                backgroundColor: AppColors.primaryGreen,
+              ),
+            );
+            Navigator.pop(context);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to update password. Please check your current password.'),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error: ${e.toString()}'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -112,6 +144,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 const SizedBox(height: 36),
                 CustomPrimaryButton(
                   text: 'Save Changes',
+                  isLoading: _isLoading,
                   onPressed: _saveChanges,
                 ),
               ],
